@@ -11,4 +11,5 @@ namespace DecodeLabs\Archetype;
 
 interface Finder extends Resolver
 {
+    public function findFile(string $name): ?string;
 }

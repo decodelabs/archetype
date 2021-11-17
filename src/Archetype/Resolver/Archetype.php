@@ -34,6 +34,8 @@ class Archetype implements Resolver
      */
     public function resolve(string $name): ?string
     {
+        $name = str_replace('/', '\\', $name);
+
         if (class_exists($interface = $name . 'Archetype')) {
             return $interface;
         }

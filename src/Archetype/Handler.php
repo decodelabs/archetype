@@ -66,16 +66,10 @@ class Handler
      */
     public function resolve(string $interface, string $name): string
     {
-        if (!isset($this->resolvers[$interface])) {
-            if (!$class = $this->resolve(Resolver::class, $interface)) {
-                throw Exceptional::NotFound('Interface ' . $interface . ' has no Archetype resolver');
-            }
-
-            $this->resolvers[$interface][] = new $class($interface);
-        }
+        $this->ensureResolver($interface);
 
         foreach ($this->resolvers[$interface] as $resolver) {
-            if ($class = $resolver->resolve($name)) {
+            if (null !== ($class = $resolver->resolve($name))) {
                 if (!class_exists($class)) {
                     continue;
                 }
@@ -89,5 +83,48 @@ class Handler
         }
 
         throw Exceptional::NotFound('Could not resolve "' . $name . '" for interface ' . $interface);
+    }
+
+
+    /**
+     * Find file in space
+     *
+     * @param class-string $interface
+     */
+    public function findFile(string $interface, string $name): string
+    {
+        $this->ensureResolver($interface);
+
+        foreach ($this->resolvers[$interface] as $resolver) {
+            if (!$resolver instanceof Finder) {
+                continue;
+            }
+
+            if (null !== ($path = $resolver->findFile($name))) {
+                if (!is_file($path)) {
+                    continue;
+                }
+
+                return $path;
+            }
+        }
+
+        throw Exceptional::NotFound('Could not find file "' . $name . '" in namespace ' . $interface);
+    }
+
+    /**
+     * Ensure resolver is available
+     *
+     * @param class-string $interface
+     */
+    protected function ensureResolver(string $interface): void
+    {
+        if (!isset($this->resolvers[$interface])) {
+            if (!$class = $this->resolve(Resolver::class, $interface)) {
+                throw Exceptional::NotFound('Interface ' . $interface . ' has no Archetype resolver');
+            }
+
+            $this->resolvers[$interface][] = new $class($interface);
+        }
     }
 }
