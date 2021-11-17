@@ -25,7 +25,7 @@
     },
     "autoload": {
         "psr-4": {
-            "DecodeLabs\\Atlas\\": "src/Archetype"
+            "DecodeLabs\\Archetype\\": "src/Archetype"
         },
         "files": [
             "src/global.php"
