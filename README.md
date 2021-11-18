@@ -99,7 +99,7 @@ In the above example, the implementations of the <code>My\Library\Thing</code> c
 
 The <code>Resolver\Archetype</code> implementation however will also automatically look for custom <code>Resolver</code> classes in the same location as the target interface, named <code>\<Interface\>Archetype</code>.
 
-The following example will replace the default functionality and cause Archetype to look in a different location for the <code>Code</code> implementations:
+The following example will replace the default functionality and cause Archetype to look in a different location for the <code>Thing</code> implementations:
 
 ```php
 namespace My\Library {
