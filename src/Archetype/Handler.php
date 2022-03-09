@@ -124,6 +124,7 @@ class Handler
                 throw Exceptional::NotFound('Interface ' . $interface . ' has no Archetype resolver');
             }
 
+            /** @var class-string<Resolver> $class */
             $this->resolvers[$interface][] = new $class($interface);
         }
     }
