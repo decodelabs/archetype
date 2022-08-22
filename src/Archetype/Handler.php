@@ -23,6 +23,7 @@ class Handler
      */
     public function register(Resolver $resolver): void
     {
+        /** @var string */
         $interface = $resolver->getInterface();
 
         if (
@@ -61,7 +62,7 @@ class Handler
     /**
      * Resolve archetype class
      *
-     * @param class-string $interface
+     * @phpstan-param class-string $interface
      * @return class-string
      */
     public function resolve(string $interface, string $name): string
@@ -89,7 +90,7 @@ class Handler
     /**
      * Find file in space
      *
-     * @param class-string $interface
+     * @phpstan-param class-string $interface
      */
     public function findFile(string $interface, string $name): string
     {
@@ -115,7 +116,7 @@ class Handler
     /**
      * Ensure resolver is available
      *
-     * @param class-string $interface
+     * @phpstan-param class-string $interface
      */
     protected function ensureResolver(string $interface): void
     {
@@ -124,7 +125,7 @@ class Handler
                 throw Exceptional::NotFound('Interface ' . $interface . ' has no Archetype resolver');
             }
 
-            /** @var class-string<Resolver> $class */
+            /** @phpstan-var class-string<Resolver> $class */
             $this->resolvers[$interface][] = new $class($interface);
         }
     }
