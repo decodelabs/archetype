@@ -16,7 +16,7 @@ class Local implements Resolver
     /**
      * @phpstan-var class-string
      */
-    protected $interface;
+    protected string $interface;
 
 
     /**
