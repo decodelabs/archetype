@@ -23,7 +23,7 @@ class Handler
      */
     public function register(Resolver $resolver): void
     {
-        /** @var string */
+        /** @var string $interface */
         $interface = $resolver->getInterface();
 
         if (
