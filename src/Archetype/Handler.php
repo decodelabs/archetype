@@ -16,7 +16,7 @@ class Handler
     /**
      * @var array<class-string, array<Resolver>>
      */
-    protected $resolvers = [];
+    protected array $resolvers = [];
 
     /**
      * Register resolver
@@ -63,10 +63,12 @@ class Handler
      * Resolve archetype class
      *
      * @phpstan-param class-string $interface
-     * @return class-string
+     * @phpstan-return class-string
      */
-    public function resolve(string $interface, string $name): string
-    {
+    public function resolve(
+        string $interface,
+        string $name
+    ): string {
         $this->ensureResolver($interface);
 
         foreach ($this->resolvers[$interface] as $resolver) {
@@ -92,8 +94,10 @@ class Handler
      *
      * @phpstan-param class-string $interface
      */
-    public function findFile(string $interface, string $name): string
-    {
+    public function findFile(
+        string $interface,
+        string $name
+    ): string {
         $this->ensureResolver($interface);
 
         foreach ($this->resolvers[$interface] as $resolver) {
