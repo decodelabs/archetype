@@ -14,7 +14,7 @@ use DecodeLabs\Archetype\Resolver;
 class Local implements Resolver
 {
     /**
-     * @var class-string
+     * @phpstan-var class-string
      */
     protected $interface;
 
@@ -22,7 +22,7 @@ class Local implements Resolver
     /**
      * Init with interface
      *
-     * @param class-string $interface
+     * @phpstan-param class-string $interface
      */
     public function __construct(string $interface)
     {
