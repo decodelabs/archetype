@@ -46,6 +46,9 @@
         "analyze": "phpstan analyze --no-progress",
         "ecs": "ecs check --no-progress-bar",
         "ecs-fix": "ecs check --no-progress-bar --fix",
-        "lint": "parallel-lint src/ ecs.php"
+        "lint": "parallel-lint src/ ecs.php",
+        "eclint": "eclint check src/ ecs.php",
+        "eclint-fix": "eclint fix src/ ecs.php",
+        "check": "composer update && composer analyze && composer ecs && composer lint && composer eclint"
     }
 }
