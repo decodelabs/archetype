@@ -62,8 +62,9 @@ class Handler
     /**
      * Resolve archetype class
      *
-     * @phpstan-param class-string $interface
-     * @phpstan-return class-string
+     * @template T
+     * @phpstan-param class-string<T> $interface
+     * @phpstan-return class-string<T>
      */
     public function resolve(
         string $interface,
@@ -81,6 +82,7 @@ class Handler
                     throw Exceptional::UnexpectedValue('Class ' . $class . ' does not implement ' . $interface);
                 }
 
+                /** @phpstan-var class-string<T> */
                 return $class;
             }
         }
