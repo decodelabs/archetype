@@ -1,3 +1,6 @@
+## v0.2.3 (2022-09-27)
+* Updated Veneer dependency
+
 ## v0.2.2 (2022-08-26)
 * Fixed resolve() PHPStan return hint
 * Updated CI environment
