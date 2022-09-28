@@ -70,6 +70,17 @@ class Handler
         string $interface,
         string $name
     ): string {
+        // Name is a classname already
+        if (
+            class_exists($name) &&
+            is_subclass_of($name, $interface)
+        ) {
+            /** @phpstan-var class-string<T> $name */
+            return $name;
+        }
+
+
+        // Make sure there's at least one resolver for interface
         $this->ensureResolver($interface);
 
         foreach ($this->resolvers[$interface] as $resolver) {
