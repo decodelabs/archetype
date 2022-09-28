@@ -1,3 +1,6 @@
+## v0.2.5 (2022-09-28)
+* Added check to resolve $name as subclass
+
 ## v0.2.4 (2022-09-27)
 * Updated Veneer stub
 * Updated composer check script
