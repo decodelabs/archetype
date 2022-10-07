@@ -7,7 +7,9 @@
 [![PHPStan](https://img.shields.io/badge/PHPStan-enabled-44CC11.svg?longCache=true&style=flat)](https://github.com/phpstan/phpstan)
 [![License](https://img.shields.io/packagist/l/decodelabs/archetype?style=flat)](https://packagist.org/packages/decodelabs/archetype)
 
-**Simple named library loader for PHP**
+### Simple named library loader for PHP
+
+Archetype provides a generic frontend to resolving implementation classes for a named interface with an extensible plugin architechture.
 
 _Get news and updates on the [DecodeLabs blog](https://blog.decodelabs.com)._
 
