@@ -7,7 +7,11 @@
 [![PHPStan](https://img.shields.io/badge/PHPStan-enabled-44CC11.svg?longCache=true&style=flat)](https://github.com/phpstan/phpstan)
 [![License](https://img.shields.io/packagist/l/decodelabs/archetype?style=flat)](https://packagist.org/packages/decodelabs/archetype)
 
-Simple named library loader for PHP
+**Simple named library loader for PHP**
+
+_Get news and updates on the [DecodeLabs blog](https://blog.decodelabs.com)._
+
+---
 
 ## Installation
 
