@@ -152,9 +152,9 @@ Example:
 ```php
 namespace My\Library {
 
-    use DecodeLabs\Archetype\Resolver;
+    use DecodeLabs\Archetype\Finder;
 
-    class ThingArchetype implements Resolver
+    class ThingArchetype implements Finder
     {
 
         public function getInterface(): string
