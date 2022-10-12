@@ -1,3 +1,6 @@
+## v0.2.6 (2022-10-12)
+* Added Extension Resolver
+
 ## v0.2.5 (2022-09-28)
 * Added check to resolve $name as subclass
 
