@@ -34,6 +34,10 @@ class Handler
             throw Exceptional::NotFound('Interface ' . $interface . ' does not exist');
         }
 
+        if ($interface !== Resolver::class) {
+            $this->ensureResolver($interface);
+        }
+
         $reorder = !empty($this->resolvers[$interface] ?? null);
         $this->resolvers[$interface][] = $resolver;
 
