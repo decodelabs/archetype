@@ -9,10 +9,14 @@ declare(strict_types=1);
 
 namespace DecodeLabs\Archetype\Resolver;
 
-use DecodeLabs\Archetype\Resolver;
+use DecodeLabs\Archetype\Scanner;
+use DecodeLabs\Archetype\ScannerTrait;
+use Generator;
 
-class Extension implements Resolver
+class Extension implements Scanner
 {
+    use ScannerTrait;
+
     /**
      * @phpstan-var class-string
      */
@@ -63,5 +67,13 @@ class Extension implements Resolver
     public function resolve(string $name): ?string
     {
         return $this->namespace . '\\' . $name;
+    }
+
+    /**
+     * Scan for available for classes
+     */
+    public function scanClasses(): Generator
+    {
+        yield from $this->scanNamespaceClasses($this->namespace);
     }
 }

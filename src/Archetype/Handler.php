@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace DecodeLabs\Archetype;
 
 use DecodeLabs\Exceptional;
+use Generator;
 
 class Handler
 {
@@ -129,6 +130,30 @@ class Handler
 
         throw Exceptional::NotFound('Could not find file "' . $name . '" in namespace ' . $interface);
     }
+
+
+    /**
+     * Scan Resolvers for available classes
+     *
+     * @phpstan-param class-string $interface
+     * @return Generator<string, string>
+     * @phpstan-return Generator<string, class-string>
+     */
+    public function scanClasses(
+        string $interface
+    ): Generator {
+        $this->ensureResolver($interface);
+
+        foreach ($this->resolvers[$interface] as $resolver) {
+            if (!$resolver instanceof Scanner) {
+                continue;
+            }
+
+            yield from $resolver->scanClasses();
+        }
+    }
+
+
 
     /**
      * Ensure resolver is available
