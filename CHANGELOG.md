@@ -1,3 +1,6 @@
+## v0.2.8 (2022-10-17)
+* Auto register local resolver when registering extension
+
 ## v0.2.7 (2022-10-17)
 * Added class scanner interface
 
