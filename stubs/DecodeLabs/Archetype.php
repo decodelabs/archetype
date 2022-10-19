@@ -9,6 +9,7 @@ use DecodeLabs\Veneer\Proxy;
 use DecodeLabs\Veneer\ProxyTrait;
 use DecodeLabs\Archetype\Handler as Inst;
 use DecodeLabs\Archetype\Resolver as Ref0;
+use Generator as Ref1;
 
 class Archetype implements Proxy
 {
@@ -26,5 +27,8 @@ class Archetype implements Proxy
     }
     public static function findFile(string $interface, string $name): string {
         return static::$instance->findFile(...func_get_args());
+    }
+    public static function scanClasses(string $interface): Ref1 {
+        return static::$instance->scanClasses(...func_get_args());
     }
 };
