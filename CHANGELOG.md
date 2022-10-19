@@ -1,3 +1,6 @@
+## v0.2.7 (2022-10-17)
+* Added class scanner interface
+
 ## v0.2.6 (2022-10-12)
 * Added Extension Resolver
 
