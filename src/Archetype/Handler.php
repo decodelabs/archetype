@@ -11,6 +11,7 @@ namespace DecodeLabs\Archetype;
 
 use DecodeLabs\Exceptional;
 use Generator;
+use ReflectionClass;
 
 class Handler
 {
@@ -153,7 +154,15 @@ class Handler
                 continue;
             }
 
-            yield from $resolver->scanClasses();
+            foreach ($resolver->scanClasses() as $path => $class) {
+                $ref = new ReflectionClass($class);
+
+                if (!$ref->implementsInterface($interface)) {
+                    continue;
+                }
+
+                yield $path => $class;
+            }
         }
     }
 
