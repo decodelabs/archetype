@@ -15,15 +15,19 @@ use FilesystemIterator;
 use Generator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use ReflectionClass;
 
 trait ScannerTrait
 {
     /**
      * @return Generator<string, string>
+     * @phpstan-param class-string|null $interface
      * @phpstan-return Generator<string, class-string>
      */
-    protected function scanNamespaceClasses(string $namespace): Generator
-    {
+    protected function scanNamespaceClasses(
+        string $namespace,
+        ?string $interface = null
+    ): Generator {
         $parts = explode('\\', $namespace);
 
         foreach (ClassLoader::getRegisteredLoaders() as $loader) {
@@ -39,7 +43,7 @@ trait ScannerTrait
 
                     foreach ($prefixes[$prefix] as $basePath) {
                         $path = $basePath . '/' . $relPath;
-                        yield from $this->scanVendorPath($path, $namespace);
+                        yield from $this->scanVendorPath($path, $namespace, $interface);
                     }
                 }
 
@@ -52,11 +56,13 @@ trait ScannerTrait
      * Scan classes in vendor path
      *
      * @return Generator<string, string>
+     * @phpstan-param class-string|null $interface
      * @phpstan-return Generator<string, class-string>
      */
     protected function scanVendorPath(
         string $path,
-        string $namespace
+        string $namespace,
+        ?string $interface = null
     ): Generator {
         if (!is_dir($path)) {
             return;
@@ -86,6 +92,14 @@ trait ScannerTrait
 
             if (!class_exists($class)) {
                 continue;
+            }
+
+            if ($interface !== null) {
+                $ref = new ReflectionClass($class);
+
+                if (!$ref->implementsInterface($interface)) {
+                    continue;
+                }
             }
 
             if (false !== ($realPath = realpath($pathName))) {
