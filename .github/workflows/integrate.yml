@@ -16,13 +16,18 @@ jobs:
       - name: "Checkout code"
         uses: "actions/checkout@v3"
 
+      - name: Install Effigy
+        run: |
+          composer global require decodelabs/effigy
+
       - name: "Check file permissions"
         run: |
           test "$(find . -type f -not -path './.git/*' -executable)" = ""
 
       - name: "Find non-printable ASCII characters"
         run: |
-          ! LC_ALL=C.UTF-8 find . -type f -name "*.php" -print0 | xargs -0 -- grep -PHn "[^ -~]" | grep -v '// @ignore-non-ascii$'
+          effigy non-ascii
+#          ! LC_ALL=C.UTF-8 find . -type f -name "*.php" -print0 | xargs -0 -- grep -PHn "[^ -~]" | grep -v '// @ignore-non-ascii$'
 
   syntax_errors:
     name: "1️⃣ Syntax errors"
@@ -47,40 +52,40 @@ jobs:
         run: "composer exec -- parallel-lint src/ ecs.php"
         # @TODO Check template files for syntax errors
 
-  unit_tests:
-    name: "2️⃣ Unit and functional tests"
-    needs:
-      - "byte_level"
-      - "syntax_errors"
-    strategy:
-      matrix:
-        php-version:
-          - "8.0"
-          - "8.1"
-          - "8.2"
-        dependencies:
-          - "lowest"
-          - "highest"
-    runs-on: "ubuntu-latest"
-    steps:
-      - name: "Set up PHP"
-        uses: "shivammathur/setup-php@v2"
-        with:
-          php-version: "${{ matrix.php-version }}"
-          extensions: "intl"
-          ini-values: "post_max_size=256M"
+#  unit_tests:
+#    name: "2️⃣ Unit and functional tests"
+#    needs:
+#      - "byte_level"
+#      - "syntax_errors"
+#    strategy:
+#      matrix:
+#        php-version:
+#          - "8.0"
+#          - "8.1"
+#          - "8.2"
+#        dependencies:
+#          - "lowest"
+#          - "highest"
+#    runs-on: "ubuntu-latest"
+#    steps:
+#      - name: "Set up PHP"
+#        uses: "shivammathur/setup-php@v2"
+#        with:
+#          php-version: "${{ matrix.php-version }}"
+#          extensions: "intl"
+#          ini-values: "post_max_size=256M"
 
-      - name: "Checkout code"
-        uses: "actions/checkout@v3"
+#      - name: "Checkout code"
+#        uses: "actions/checkout@v3"
 
-      - name: "Install dependencies"
-        uses: "ramsey/composer-install@v2"
-        with:
-          dependency-versions: "${{ matrix.dependencies }}"
+#      - name: "Install dependencies"
+#        uses: "ramsey/composer-install@v2"
+#        with:
+#          dependency-versions: "${{ matrix.dependencies }}"
 
-      - name: "Execute unit tests"
-#        run: "composer run-script --no-interaction phpunit -- --verbose"
-        run: "echo 'Tom has the key.'"
+#      - name: "Execute unit tests"
+        # run: "composer run-script --no-interaction phpunit -- --verbose"
+#        run: "echo 'Tom has the key.'"
         # @TODO Functional tests
 
 #      - name: Send coverage to Coveralls
@@ -123,7 +128,7 @@ jobs:
           dependency-versions: "highest"
 
       - name: "Execute static analysis"
-        run: "composer run-script --no-interaction analyze"
+        run: "composer exec phpstan analyze --no-interaction -- --no-progress"
         # @TODO Magic Number Detector, Copy-Paste Detector
 
   coding_standards:
@@ -155,7 +160,7 @@ jobs:
           dependency-versions: "highest"
 
       - name: "Check coding style"
-        run: "composer run-script --no-interaction ecs"
+        run: "composer exec ecs check --no-interaction -- --no-progress-bar"
 
   exported_files:
     name: "5️⃣ Exported files"
