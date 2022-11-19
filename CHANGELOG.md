@@ -1,4 +1,5 @@
 * Fixed PHP8.1 testing
+* Migrated to use effigy in CI workflow
 
 ## v0.2.9 (2022-10-28)
 * Added interface check to class scanner
