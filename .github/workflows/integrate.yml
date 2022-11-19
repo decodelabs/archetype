@@ -27,10 +27,6 @@ jobs:
         run: |
           test "$(find . -type f -not -path './.git/*' -executable)" = ""
 
-      - name: "Find non-printable ASCII characters"
-        run: |
-          composer global exec effigy non-ascii
-
       - name: Install Effigy
         run: |
           composer global require decodelabs/effigy
@@ -39,6 +35,10 @@ jobs:
         uses: "ramsey/composer-install@v2"
         with:
           dependency-versions: "highest"
+
+      - name: "Find non-printable ASCII characters"
+        run: |
+          composer global exec effigy non-ascii
 
       - name: "Check source code for syntax errors"
         run: |
