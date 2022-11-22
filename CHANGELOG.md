@@ -1,3 +1,4 @@
+## v0.2.10 (2022-11-22)
 * Added normalizer interface structure
 * Renamed Local resolver to Generic
 * Added extension namespaces to Generic resolver
