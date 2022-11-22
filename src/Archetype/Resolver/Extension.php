@@ -58,7 +58,7 @@ class Extension implements Scanner
      */
     public function getPriority(): int
     {
-        return 10;
+        return 15;
     }
 
     /**
@@ -66,6 +66,9 @@ class Extension implements Scanner
      */
     public function resolve(string $name): ?string
     {
+        $name = str_replace('/', '\\', $name);
+        $name = trim($name, '\\');
+
         return $this->namespace . '\\' . $name;
     }
 

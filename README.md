@@ -89,7 +89,7 @@ namespace My\App
 
 ## Resolvers
 
-Archetype uses a hierarchy of <code>Resolvers</code> to turn a name into a class. By default, the <code>Handler</code> will fall back on a <code>Resolver\Local</code> instance that simply locates the named class within the namespace of the associated interface.
+Archetype uses a hierarchy of <code>Resolvers</code> to turn a name into a class. By default, the <code>Handler</code> will fall back on a <code>Resolver\Generic</code> instance that simply locates the named class within the namespace of the associated interface.
 
 In the above example, the implementations of the <code>My\Library\Thing</code> can be found at <code>My\Library\Thing\\*</code>.
 

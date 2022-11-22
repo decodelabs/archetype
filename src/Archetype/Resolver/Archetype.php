@@ -40,6 +40,6 @@ class Archetype implements Resolver
             return $interface;
         }
 
-        return Local::class;
+        return Generic::class;
     }
 }

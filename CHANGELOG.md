@@ -1,3 +1,6 @@
+* Added normalizer interface structure
+* Renamed Local resolver to Generic
+* Added extension namespaces to Generic resolver
 * Fixed PHP8.1 testing
 * Migrated to use effigy in CI workflow
 
