@@ -13,7 +13,7 @@ use DecodeLabs\Archetype\Scanner;
 use DecodeLabs\Archetype\ScannerTrait;
 use Generator;
 
-class Local implements Scanner
+class Generic implements Scanner
 {
     use ScannerTrait;
 
@@ -21,6 +21,11 @@ class Local implements Scanner
      * @phpstan-var class-string
      */
     protected string $interface;
+
+    /**
+     * @var array<string>
+     */
+    protected array $namespaces = [];
 
 
     /**
@@ -46,7 +51,15 @@ class Local implements Scanner
      */
     public function getPriority(): int
     {
-        return 5;
+        return 20;
+    }
+
+    /**
+     * Add namespace
+     */
+    public function addNamespace(string $namespace): void
+    {
+        $this->namespaces[] = $namespace;
     }
 
     /**
@@ -54,7 +67,24 @@ class Local implements Scanner
      */
     public function resolve(string $name): ?string
     {
-        return $this->interface . '\\' . $name;
+        $name = str_replace('/', '\\', $name);
+        $name = trim($name, '\\');
+
+        $classes = [
+            $this->interface . '\\' . $name
+        ];
+
+        foreach ($this->namespaces as $namespace) {
+            $classes[] = $namespace . '\\' . $name;
+        }
+
+        foreach (array_reverse($classes) as $class) {
+            if (class_exists($class)) {
+                return $class;
+            }
+        }
+
+        return null;
     }
 
 
@@ -64,5 +94,9 @@ class Local implements Scanner
     public function scanClasses(): Generator
     {
         yield from $this->scanNamespaceClasses($this->interface);
+
+        foreach ($this->namespaces as $namespace) {
+            yield from $this->scanNamespaceClasses($namespace, $this->interface);
+        }
     }
 }

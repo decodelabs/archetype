@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace DecodeLabs\Archetype;
 
+use DecodeLabs\Archetype\Normalizer\Generic as GenericNormalizer;
+use DecodeLabs\Archetype\Resolver\Generic as GenericResolver;
 use DecodeLabs\Exceptional;
 use Generator;
 use ReflectionClass;
@@ -21,12 +23,18 @@ class Handler
     protected array $resolvers = [];
 
     /**
-     * Register resolver
+     * @var array<class-string, array<Normalizer>>
      */
-    public function register(Resolver $resolver): void
-    {
+    protected array $normalizers = [];
+
+    /**
+     * Register resolver or pre-processor
+     */
+    public function register(
+        Resolver|Normalizer $item
+    ): void {
         /** @var string $interface */
-        $interface = $resolver->getInterface();
+        $interface = $item->getInterface();
 
         if (
             !interface_exists($interface) &&
@@ -39,11 +47,13 @@ class Handler
             $this->ensureResolver($interface);
         }
 
-        $reorder = !empty($this->resolvers[$interface] ?? null);
-        $this->resolvers[$interface][] = $resolver;
+        $key = $this->getListKey($item);
+
+        $reorder = !empty($this->{$key}[$interface] ?? null);
+        $this->{$key}[$interface][] = $item;
 
         if ($reorder) {
-            usort($this->resolvers[$interface], function ($a, $b) {
+            usort($this->{$key}[$interface], function ($a, $b) {
                 return $a->getPriority() <=> $b->getPriority();
             });
         }
@@ -52,16 +62,73 @@ class Handler
     /**
      * Unregister resolver
      */
-    public function unregister(Resolver $resolver): void
-    {
-        $interface = $resolver->getInterface();
+    public function unregister(
+        Resolver|Normalizer $item
+    ): void {
+        $interface = $item->getInterface();
+        $key = $this->getListKey($item);
 
-        foreach ($this->resolvers[$interface] ?? [] as $key => $registered) {
-            if ($registered === $resolver) {
-                unset($this->resolvers[$interface][$key]);
+        foreach ($this->{$key}[$interface] ?? [] as $key => $registered) {
+            if ($registered === $item) {
+                unset($this->{$key}[$interface][$key]);
                 break;
             }
         }
+    }
+
+
+    /**
+     * Register custom normalizer
+     *
+     * @template T
+     * @phpstan-param class-string<T> $interface
+     */
+    public function registerCustomNormalizer(
+        string $interface,
+        callable $normalizer,
+        int $priority = 10
+    ): Normalizer {
+        $normalizer = new GenericNormalizer(
+            $interface,
+            $normalizer,
+            $priority
+        );
+
+        $this->register($normalizer);
+        return $normalizer;
+    }
+
+    protected function getListKey(
+        Resolver|Normalizer $item
+    ): string {
+        if ($item instanceof Resolver) {
+            return 'resolvers';
+        } else {
+            return 'normalizers';
+        }
+    }
+
+
+    /**
+     * Add namespace to Generic resolver
+     *
+     * @template T
+     * @phpstan-param class-string<T> $interface
+     */
+    public function extend(
+        string $interface,
+        string $namespace
+    ): void {
+        $this->ensureResolver($interface);
+
+        foreach ($this->resolvers[$interface] as $resolver) {
+            if ($resolver instanceof GenericResolver) {
+                $resolver->addNamespace($namespace);
+                return;
+            }
+        }
+
+        throw Exceptional::NotFound('Interface ' . $interface . ' does not have a local resolver');
     }
 
 
@@ -88,6 +155,7 @@ class Handler
 
         // Make sure there's at least one resolver for interface
         $this->ensureResolver($interface);
+        $name = $this->normalize($interface, $name);
 
         foreach ($this->resolvers[$interface] as $resolver) {
             if (null !== ($class = $resolver->resolve($name))) {
@@ -105,6 +173,25 @@ class Handler
         }
 
         throw Exceptional::NotFound('Could not resolve "' . $name . '" for interface ' . $interface);
+    }
+
+    /**
+     * Normalize input name
+     *
+     * @template T
+     * @phpstan-param class-string<T> $interface
+     */
+    public function normalize(
+        string $interface,
+        string $name
+    ): string {
+        foreach ($this->normalizers[$interface] ?? [] as $proc) {
+            if (null !== ($newName = $proc->normalize($name))) {
+                return $newName;
+            }
+        }
+
+        return $name;
     }
 
 

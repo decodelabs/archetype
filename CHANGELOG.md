@@ -1,3 +1,10 @@
+## v0.2.10 (2022-11-22)
+* Added normalizer interface structure
+* Renamed Local resolver to Generic
+* Added extension namespaces to Generic resolver
+* Fixed PHP8.1 testing
+* Migrated to use effigy in CI workflow
+
 ## v0.2.9 (2022-10-28)
 * Added interface check to class scanner
 
