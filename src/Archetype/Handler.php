@@ -137,11 +137,13 @@ class Handler
      *
      * @template T
      * @phpstan-param class-string<T> $interface
+     * @phpstan-param class-string<T>|callable(class-string<T>): class-string<T>|null $default
      * @phpstan-return class-string<T>
      */
     public function resolve(
         string $interface,
-        string $name
+        string $name,
+        string|callable|null $default = null
     ): string {
         // Name is a classname already
         if (
@@ -170,6 +172,21 @@ class Handler
                 /** @phpstan-var class-string<T> */
                 return $class;
             }
+        }
+
+
+        // Default
+        if (is_callable($default)) {
+            $default = (string)$default($interface);
+        }
+
+        if ($default !== null) {
+            if (!is_subclass_of($default, $interface)) {
+                throw Exceptional::UnexpectedValue('Class ' . $default . ' does not implement ' . $interface);
+            }
+
+            /** @phpstan-var class-string<T> */
+            return $default;
         }
 
         throw Exceptional::NotFound('Could not resolve "' . $name . '" for interface ' . $interface);

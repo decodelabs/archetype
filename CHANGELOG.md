@@ -1,3 +1,6 @@
+## v0.2.11 (2022-11-28)
+* Added default fallback to resolve handler
+
 ## v0.2.10 (2022-11-22)
 * Added normalizer interface structure
 * Renamed Local resolver to Generic
