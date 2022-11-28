@@ -8,8 +8,8 @@ namespace DecodeLabs;
 use DecodeLabs\Archetype\Handler as Inst;
 use DecodeLabs\Archetype\Normalizer as Ref1;
 use DecodeLabs\Archetype\Resolver as Ref0;
-use DecodeLabs\Veneer\Proxy;
-use DecodeLabs\Veneer\ProxyTrait;
+use DecodeLabs\Veneer\Proxy as Proxy;
+use DecodeLabs\Veneer\ProxyTrait as ProxyTrait;
 use Generator as Ref2;
 
 class Archetype implements Proxy
@@ -34,7 +34,7 @@ class Archetype implements Proxy
     public static function extend(string $interface, string $namespace): void
     {
     }
-    public static function resolve(string $interface, string $name): string
+    public static function resolve(string $interface, string $name, callable|string|null $default = null): string
     {
         return static::$instance->resolve(...func_get_args());
     }
