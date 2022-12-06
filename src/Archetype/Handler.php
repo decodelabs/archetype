@@ -135,7 +135,7 @@ class Handler
     /**
      * Resolve archetype class
      *
-     * @template T
+     * @template T of object
      * @phpstan-param class-string<T> $interface
      * @phpstan-param class-string<T>|callable(class-string<T>): class-string<T>|null $default
      * @phpstan-return class-string<T>
@@ -148,7 +148,7 @@ class Handler
         // Name is a classname already
         if (
             class_exists($name) &&
-            is_subclass_of($name, $interface)
+            $this->isResolved($interface, $name)
         ) {
             /** @phpstan-var class-string<T> $name */
             return $name;
@@ -165,12 +165,7 @@ class Handler
                     continue;
                 }
 
-                if (!is_subclass_of($class, $interface)) {
-                    throw Exceptional::UnexpectedValue('Class ' . $class . ' does not implement ' . $interface);
-                }
-
-                /** @phpstan-var class-string<T> */
-                return $class;
+                return $this->checkResolution($interface, $class);
             }
         }
 
@@ -181,21 +176,55 @@ class Handler
         }
 
         if ($default !== null) {
-            if (!is_subclass_of($default, $interface)) {
-                throw Exceptional::UnexpectedValue('Class ' . $default . ' does not implement ' . $interface);
-            }
-
-            /** @phpstan-var class-string<T> */
-            return $default;
+            return $this->checkResolution($interface, $default);
         }
 
         throw Exceptional::NotFound('Could not resolve "' . $name . '" for interface ' . $interface);
     }
 
     /**
+     * @template T of object
+     * @phpstan-param class-string<T> $interface
+     */
+    protected function isResolved(
+        string $interface,
+        string $class
+    ): bool {
+        return
+            is_subclass_of($class, $interface) ||
+            (
+                $class === $interface &&
+                (new ReflectionClass($class))->isInstantiable()
+            );
+    }
+
+    /**
+     * @template T of object
+     * @phpstan-param class-string<T> $interface
+     * @phpstan-return class-string<T>
+     */
+    protected function checkResolution(
+        string $interface,
+        string $class
+    ): string {
+        if ($this->isResolved($interface, $class)) {
+            /** @phpstan-var class-string<T> $class */
+            return $class;
+        }
+
+        if ($class === $interface) {
+            $message = 'Class ' . $class . ' is not instantiable';
+        } else {
+            $message = 'Class ' . $class . ' does not implement ' . $interface;
+        }
+
+        throw Exceptional::UnexpectedValue($message);
+    }
+
+    /**
      * Normalize input name
      *
-     * @template T
+     * @template T of object
      * @phpstan-param class-string<T> $interface
      */
     public function normalize(
