@@ -1,3 +1,5 @@
+* Improved resolution subclass check
+
 ## v0.2.11 (2022-11-28)
 * Added default fallback to resolve handler
 

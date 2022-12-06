@@ -148,7 +148,7 @@ class Handler
         // Name is a classname already
         if (
             class_exists($name) &&
-            is_subclass_of($name, $interface)
+            $this->checkResolution($interface, $name)
         ) {
             /** @phpstan-var class-string<T> $name */
             return $name;
@@ -165,7 +165,7 @@ class Handler
                     continue;
                 }
 
-                if (!is_subclass_of($class, $interface)) {
+                if (!$this->checkResolution($interface, $class)) {
                     throw Exceptional::UnexpectedValue('Class ' . $class . ' does not implement ' . $interface);
                 }
 
@@ -181,7 +181,7 @@ class Handler
         }
 
         if ($default !== null) {
-            if (!is_subclass_of($default, $interface)) {
+            if (!$this->checkResolution($interface, $default)) {
                 throw Exceptional::UnexpectedValue('Class ' . $default . ' does not implement ' . $interface);
             }
 
@@ -190,6 +190,15 @@ class Handler
         }
 
         throw Exceptional::NotFound('Could not resolve "' . $name . '" for interface ' . $interface);
+    }
+
+    protected function checkResolution(
+        string $interface,
+        string $class
+    ): bool {
+        return
+            $class === $interface ||
+            is_subclass_of($class, $interface);
     }
 
     /**
