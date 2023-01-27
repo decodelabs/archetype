@@ -16,7 +16,7 @@ class Archetype implements Proxy
 {
     use ProxyTrait;
 
-    public const VENEER = 'DecodeLabs\Archetype';
+    public const VENEER = 'DecodeLabs\\Archetype';
     public const VENEER_TARGET = Inst::class;
 
     public static Inst $instance;
