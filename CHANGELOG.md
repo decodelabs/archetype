@@ -1,3 +1,6 @@
+## v0.2.13 (2023-09-26)
+* Converted phpstan doc comments to generic
+
 ## v0.2.12 (2022-12-06)
 * Improved resolution subclass check
 

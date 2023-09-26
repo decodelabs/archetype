@@ -15,7 +15,7 @@ use DecodeLabs\Archetype\Normalizer;
 class Generic implements Normalizer
 {
     /**
-     * @phpstan-var class-string
+     * @var class-string
      */
     protected string $interface;
 
@@ -25,7 +25,7 @@ class Generic implements Normalizer
     /**
      * Init with callable
      *
-     * @phpstan-param class-string $interface
+     * @param class-string $interface
      */
     public function __construct(
         string $interface,

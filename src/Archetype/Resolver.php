@@ -12,7 +12,7 @@ namespace DecodeLabs\Archetype;
 interface Resolver
 {
     /**
-     * @phpstan-return class-string
+     * @return class-string
      */
     public function getInterface(): string;
 

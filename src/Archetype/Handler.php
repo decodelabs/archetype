@@ -81,7 +81,7 @@ class Handler
      * Register custom normalizer
      *
      * @template T
-     * @phpstan-param class-string<T> $interface
+     * @param class-string<T> $interface
      */
     public function registerCustomNormalizer(
         string $interface,
@@ -113,7 +113,7 @@ class Handler
      * Add namespace to Generic resolver
      *
      * @template T
-     * @phpstan-param class-string<T> $interface
+     * @param class-string<T> $interface
      */
     public function extend(
         string $interface,
@@ -136,9 +136,9 @@ class Handler
      * Resolve archetype class
      *
      * @template T of object
-     * @phpstan-param class-string<T> $interface
-     * @phpstan-param class-string<T>|callable(class-string<T>): class-string<T>|null $default
-     * @phpstan-return class-string<T>
+     * @param class-string<T> $interface
+     * @param class-string<T>|callable(class-string<T>): class-string<T>|null $default
+     * @return class-string<T>
      */
     public function resolve(
         string $interface,
@@ -150,7 +150,7 @@ class Handler
             class_exists($name) &&
             $this->isResolved($interface, $name)
         ) {
-            /** @phpstan-var class-string<T> $name */
+            /** @var class-string<T> $name */
             return $name;
         }
 
@@ -184,7 +184,7 @@ class Handler
 
     /**
      * @template T of object
-     * @phpstan-param class-string<T> $interface
+     * @param class-string<T> $interface
      */
     protected function isResolved(
         string $interface,
@@ -200,15 +200,15 @@ class Handler
 
     /**
      * @template T of object
-     * @phpstan-param class-string<T> $interface
-     * @phpstan-return class-string<T>
+     * @param class-string<T> $interface
+     * @return class-string<T>
      */
     protected function checkResolution(
         string $interface,
         string $class
     ): string {
         if ($this->isResolved($interface, $class)) {
-            /** @phpstan-var class-string<T> $class */
+            /** @var class-string<T> $class */
             return $class;
         }
 
@@ -225,7 +225,7 @@ class Handler
      * Normalize input name
      *
      * @template T of object
-     * @phpstan-param class-string<T> $interface
+     * @param class-string<T> $interface
      */
     public function normalize(
         string $interface,
@@ -244,7 +244,7 @@ class Handler
     /**
      * Find file in space
      *
-     * @phpstan-param class-string $interface
+     * @param class-string $interface
      */
     public function findFile(
         string $interface,
@@ -273,9 +273,8 @@ class Handler
     /**
      * Scan Resolvers for available classes
      *
-     * @phpstan-param class-string $interface
-     * @return Generator<string, string>
-     * @phpstan-return Generator<string, class-string>
+     * @param class-string $interface
+     * @return Generator<string, class-string>
      */
     public function scanClasses(
         string $interface
@@ -304,7 +303,7 @@ class Handler
     /**
      * Ensure resolver is available
      *
-     * @phpstan-param class-string $interface
+     * @param class-string $interface
      */
     protected function ensureResolver(string $interface): void
     {
@@ -313,7 +312,7 @@ class Handler
                 throw Exceptional::NotFound('Interface ' . $interface . ' has no Archetype resolver');
             }
 
-            /** @phpstan-var class-string<Resolver> $class */
+            /** @var class-string<Resolver> $class */
             $this->resolvers[$interface][] = new $class($interface);
         }
     }
