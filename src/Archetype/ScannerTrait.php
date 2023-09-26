@@ -20,9 +20,8 @@ use ReflectionClass;
 trait ScannerTrait
 {
     /**
-     * @return Generator<string, string>
-     * @phpstan-param class-string|null $interface
-     * @phpstan-return Generator<string, class-string>
+     * @param class-string|null $interface
+     * @return Generator<string, class-string>
      */
     protected function scanNamespaceClasses(
         string $namespace,
@@ -55,9 +54,8 @@ trait ScannerTrait
     /**
      * Scan classes in vendor path
      *
-     * @return Generator<string, string>
-     * @phpstan-param class-string|null $interface
-     * @phpstan-return Generator<string, class-string>
+     * @param class-string|null $interface
+     * @return Generator<string, class-string>
      */
     protected function scanVendorPath(
         string $path,

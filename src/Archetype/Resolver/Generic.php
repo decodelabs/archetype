@@ -18,7 +18,7 @@ class Generic implements Scanner
     use ScannerTrait;
 
     /**
-     * @phpstan-var class-string
+     * @var class-string
      */
     protected string $interface;
 
@@ -31,7 +31,7 @@ class Generic implements Scanner
     /**
      * Init with interface
      *
-     * @phpstan-param class-string $interface
+     * @param class-string $interface
      */
     public function __construct(string $interface)
     {

@@ -14,8 +14,7 @@ use Generator;
 interface Scanner extends Resolver
 {
     /**
-     * @return Generator<string, string>
-     * @phpstan-return Generator<string, class-string>
+     * @return Generator<string, class-string>
      */
     public function scanClasses(): Generator;
 }

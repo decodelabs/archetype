@@ -12,7 +12,7 @@ namespace DecodeLabs\Archetype;
 interface Normalizer
 {
     /**
-     * @phpstan-return class-string
+     * @return class-string
      */
     public function getInterface(): string;
 
