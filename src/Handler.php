@@ -9,11 +9,20 @@ declare(strict_types=1);
 
 namespace DecodeLabs\Archetype;
 
+use DecodeLabs\Archetype;
 use DecodeLabs\Archetype\Normalizer\Generic as GenericNormalizer;
+use DecodeLabs\Archetype\Resolver\Archetype as ArchetypeResolver;
 use DecodeLabs\Archetype\Resolver\Generic as GenericResolver;
 use DecodeLabs\Exceptional;
+use DecodeLabs\Veneer;
 use Generator;
 use ReflectionClass;
+
+// Register the Veneer facade
+Veneer::register(Handler::class, Archetype::class);
+
+// Load Archetype Resolver
+Archetype::register(new ArchetypeResolver());
 
 class Handler
 {

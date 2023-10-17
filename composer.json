@@ -2,12 +2,12 @@
     "name": "decodelabs/archetype",
     "description": "Simple named library loader",
     "type": "library",
-    "keywords": ["library", "loader", "finder"],
+    "keywords": [ "library", "loader", "finder" ],
     "license": "MIT",
-    "authors": [{
-        "name": "Tom Wright",
-        "email": "tom@inflatablecookie.com"
-    }],
+    "authors": [ {
+            "name": "Tom Wright",
+            "email": "tom@inflatablecookie.com"
+        } ],
     "require": {
         "php": "^8.0",
 
@@ -21,10 +21,10 @@
     },
     "autoload": {
         "psr-4": {
-            "DecodeLabs\\Archetype\\": "src/Archetype"
+            "DecodeLabs\\Archetype\\": "src/"
         },
         "files": [
-            "src/global.php"
+            "src/Handler.php"
         ]
     },
     "extra": {
