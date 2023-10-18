@@ -18,12 +18,6 @@ use DecodeLabs\Veneer;
 use Generator;
 use ReflectionClass;
 
-// Register the Veneer facade
-Veneer::register(Handler::class, Archetype::class);
-
-// Load Archetype Resolver
-Archetype::register(new ArchetypeResolver());
-
 class Handler
 {
     /**
@@ -326,3 +320,10 @@ class Handler
         }
     }
 }
+
+
+// Register the Veneer facade
+Veneer::register(Handler::class, Archetype::class);
+
+// Load Archetype Resolver
+Archetype::register(new ArchetypeResolver());
