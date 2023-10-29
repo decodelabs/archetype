@@ -1,3 +1,7 @@
+## v0.2.14 (2023-10-29)
+* Added default resolver interface for nameless resolution
+* Refactored package file structure
+
 ## v0.2.13 (2023-09-26)
 * Converted phpstan doc comments to generic
 
