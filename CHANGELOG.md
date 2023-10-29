@@ -1,3 +1,4 @@
+## v0.2.14 (2023-10-29)
 * Added default resolver interface for nameless resolution
 * Refactored package file structure
 
