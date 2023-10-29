@@ -145,11 +145,32 @@ class Handler
      */
     public function resolve(
         string $interface,
-        string $name,
+        ?string $name = null,
         string|callable|null $default = null
     ): string {
+        if (null === ($class = $this->tryResolve($interface, $name, $default))) {
+            throw Exceptional::NotFound('Could not resolve ' . ($name ? '"' . $name . '"' : 'default') . ' for interface ' . $interface);
+        }
+
+        return $class;
+    }
+
+    /**
+     * Resolve archetype class
+     *
+     * @template T of object
+     * @param class-string<T> $interface
+     * @param class-string<T>|callable(class-string<T>): class-string<T>|null $default
+     * @return class-string<T>
+     */
+    public function tryResolve(
+        string $interface,
+        ?string $name = null,
+        string|callable|null $default = null
+    ): ?string {
         // Name is a classname already
         if (
+            $name !== null &&
             class_exists($name) &&
             $this->isResolved($interface, $name)
         ) {
@@ -160,16 +181,30 @@ class Handler
 
         // Make sure there's at least one resolver for interface
         $this->ensureResolver($interface);
-        $name = $this->normalize($interface, $name);
+
+        if ($name !== null) {
+            $name = $this->normalize($interface, $name);
+        }
 
         foreach ($this->resolvers[$interface] as $resolver) {
-            if (null !== ($class = $resolver->resolve($name))) {
-                if (!class_exists($class)) {
+            if ($name === null) {
+                if (!$resolver instanceof DefaultResolver) {
                     continue;
                 }
 
-                return $this->checkResolution($interface, $class);
+                $class = $resolver->resolveDefault();
+            } else {
+                $class = $resolver->resolve($name);
             }
+
+            if (
+                $class === null ||
+                !class_exists($class)
+            ) {
+                continue;
+            }
+
+            return $this->checkResolution($interface, $class);
         }
 
 
@@ -182,8 +217,9 @@ class Handler
             return $this->checkResolution($interface, $default);
         }
 
-        throw Exceptional::NotFound('Could not resolve "' . $name . '" for interface ' . $interface);
+        return null;
     }
+
 
     /**
      * @template T of object

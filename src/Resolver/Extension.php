@@ -9,13 +9,16 @@ declare(strict_types=1);
 
 namespace DecodeLabs\Archetype\Resolver;
 
+use DecodeLabs\Archetype\DefaultResolver;
+use DecodeLabs\Archetype\DefaultResolverTrait;
 use DecodeLabs\Archetype\Scanner;
 use DecodeLabs\Archetype\ScannerTrait;
 use Generator;
 
-class Extension implements Scanner
+class Extension implements Scanner, DefaultResolver
 {
     use ScannerTrait;
+    use DefaultResolverTrait;
 
     /**
      * @var class-string

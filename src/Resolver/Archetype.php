@@ -9,10 +9,14 @@ declare(strict_types=1);
 
 namespace DecodeLabs\Archetype\Resolver;
 
+use DecodeLabs\Archetype\DefaultResolver;
+use DecodeLabs\Archetype\DefaultResolverTrait;
 use DecodeLabs\Archetype\Resolver;
 
-class Archetype implements Resolver
+class Archetype implements DefaultResolver
 {
+    use DefaultResolverTrait;
+
     /**
      * Get mapped interface
      */
