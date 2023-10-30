@@ -1,3 +1,6 @@
+## v0.2.15 (2023-10-30)
+* Use interface for default resolver if instantiable
+
 ## v0.2.14 (2023-10-29)
 * Added default resolver interface for nameless resolution
 * Refactored package file structure
