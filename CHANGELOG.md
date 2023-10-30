@@ -1,3 +1,4 @@
+## v0.2.15 (2023-10-30)
 * Use interface for default resolver if instantiable
 
 ## v0.2.14 (2023-10-29)
