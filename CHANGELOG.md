@@ -1,3 +1,5 @@
+* Improved default interface resolution
+
 ## v0.2.15 (2023-10-30)
 * Use interface for default resolver if instantiable
 
