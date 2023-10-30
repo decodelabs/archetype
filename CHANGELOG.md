@@ -1,3 +1,4 @@
+## v0.2.16 (2023-10-30)
 * Improved default interface resolution
 
 ## v0.2.15 (2023-10-30)
