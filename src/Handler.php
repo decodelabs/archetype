@@ -182,6 +182,13 @@ class Handler
         // Make sure there's at least one resolver for interface
         $this->ensureResolver($interface);
 
+        if (
+            $name === null &&
+            (new ReflectionClass($interface))->isInstantiable()
+        ) {
+            $name = $interface;
+        }
+
         if ($name !== null) {
             $name = $this->normalize($interface, $name);
         }
