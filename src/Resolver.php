@@ -18,5 +18,7 @@ interface Resolver
 
     public function getPriority(): int;
 
-    public function resolve(string $name): ?string;
+    public function resolve(
+        string $name
+    ): ?string;
 }

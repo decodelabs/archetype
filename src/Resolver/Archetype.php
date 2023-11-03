@@ -36,8 +36,9 @@ class Archetype implements DefaultResolver
     /**
      * Resolve Archetype class location
      */
-    public function resolve(string $name): ?string
-    {
+    public function resolve(
+        string $name
+    ): ?string {
         $name = str_replace('/', '\\', $name);
 
         if (class_exists($interface = $name . 'Archetype')) {

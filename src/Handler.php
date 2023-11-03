@@ -351,8 +351,9 @@ class Handler
      *
      * @param class-string $interface
      */
-    protected function ensureResolver(string $interface): void
-    {
+    protected function ensureResolver(
+        string $interface
+    ): void {
         if (!isset($this->resolvers[$interface])) {
             if (!$class = $this->resolve(Resolver::class, $interface)) {
                 throw Exceptional::NotFound('Interface ' . $interface . ' has no Archetype resolver');
