@@ -56,8 +56,9 @@ class Generic implements Normalizer
     /**
      * Call closure
      */
-    public function normalize(string $name): ?string
-    {
+    public function normalize(
+        string $name
+    ): ?string {
         return ($this->normalizer)($name, $this->interface);
     }
 }

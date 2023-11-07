@@ -36,8 +36,9 @@ class Generic implements Scanner, DefaultResolver
      *
      * @param class-string $interface
      */
-    public function __construct(string $interface)
-    {
+    public function __construct(
+        string $interface
+    ) {
         $this->interface = $interface;
     }
 
@@ -60,16 +61,18 @@ class Generic implements Scanner, DefaultResolver
     /**
      * Add namespace
      */
-    public function addNamespace(string $namespace): void
-    {
+    public function addNamespace(
+        string $namespace
+    ): void {
         $this->namespaces[] = $namespace;
     }
 
     /**
      * Resolve Archetype class location
      */
-    public function resolve(string $name): ?string
-    {
+    public function resolve(
+        string $name
+    ): ?string {
         $name = str_replace('/', '\\', $name);
         $name = trim($name, '\\');
 

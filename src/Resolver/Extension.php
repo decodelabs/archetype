@@ -67,8 +67,9 @@ class Extension implements Scanner, DefaultResolver
     /**
      * Resolve Archetype class location
      */
-    public function resolve(string $name): ?string
-    {
+    public function resolve(
+        string $name
+    ): ?string {
         $name = str_replace('/', '\\', $name);
         $name = trim($name, '\\');
 

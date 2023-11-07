@@ -34,11 +34,11 @@ class Archetype implements Proxy
     public static function extend(string $interface, string $namespace): void
     {
     }
-    public static function resolve(string $interface, ?string $name = null, callable|string|null $default = null): string
+    public static function resolve(string $interface, array|string|null $names = null, callable|string|null $default = null): string
     {
         return static::$instance->resolve(...func_get_args());
     }
-    public static function tryResolve(string $interface, ?string $name = null, callable|string|null $default = null): ?string
+    public static function tryResolve(string $interface, array|string|null $names = null, callable|string|null $default = null): ?string
     {
         return static::$instance->tryResolve(...func_get_args());
     }

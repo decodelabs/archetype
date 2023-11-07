@@ -18,5 +18,7 @@ interface Normalizer
 
     public function getPriority(): int;
 
-    public function normalize(string $name): ?string;
+    public function normalize(
+        string $name
+    ): ?string;
 }
