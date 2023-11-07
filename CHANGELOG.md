@@ -1,3 +1,4 @@
+## v0.2.17 (2023-11-07)
 * Added support for resolving array of names
 * Look for namespace short name as default resolution
 
