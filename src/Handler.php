@@ -140,16 +140,21 @@ class Handler
      *
      * @template T of object
      * @param class-string<T> $interface
+     * @param string|array<string>|null $names
      * @param class-string<T>|callable(class-string<T>): class-string<T>|null $default
      * @return class-string<T>
      */
     public function resolve(
         string $interface,
-        ?string $name = null,
+        string|array|null $names = null,
         string|callable|null $default = null
     ): string {
-        if (null === ($class = $this->tryResolve($interface, $name, $default))) {
-            throw Exceptional::NotFound('Could not resolve ' . ($name ? '"' . $name . '"' : 'default') . ' for interface ' . $interface);
+        if (null === ($class = $this->tryResolve($interface, $names, $default))) {
+            if (is_array($names)) {
+                $names = implode(', ', $names);
+            }
+
+            throw Exceptional::NotFound('Could not resolve ' . ($names ? '"' . $names . '"' : 'default') . ' for interface ' . $interface);
         }
 
         return $class;
@@ -160,41 +165,62 @@ class Handler
      *
      * @template T of object
      * @param class-string<T> $interface
+     * @param string|array<string>|null $names
      * @param class-string<T>|callable(class-string<T>): class-string<T>|null $default
      * @return class-string<T>
      */
     public function tryResolve(
         string $interface,
-        ?string $name = null,
+        string|array|null $names = null,
         string|callable|null $default = null
     ): ?string {
+        if (is_string($names)) {
+            $names = [$names];
+        }
+
+        if ($names === []) {
+            $names = null;
+        }
+
         // Name is a classname already
-        if (
-            $name !== null &&
-            class_exists($name) &&
-            $this->isResolved($interface, $name)
-        ) {
-            /** @var class-string<T> $name */
-            return $name;
+        foreach ($names ?? [] as $name) {
+            if (
+                class_exists($name) &&
+                $this->isResolved($interface, $name)
+            ) {
+                /** @var class-string<T> $name */
+                return $name;
+            }
         }
 
 
         // Make sure there's at least one resolver for interface
         $this->ensureResolver($interface);
 
-        if ($name !== null) {
-            $name = $this->normalize($interface, $name);
+        foreach ($names ?? [] as $i => $name) {
+            $names[$i] = $this->normalize($interface, $name);
         }
 
         foreach ($this->resolvers[$interface] as $resolver) {
-            if ($name === null) {
+            if ($names === null) {
                 if (!$resolver instanceof DefaultResolver) {
                     continue;
                 }
 
                 $class = $resolver->resolveDefault();
             } else {
-                $class = $resolver->resolve($name);
+                $class = null;
+
+                foreach ($names as $name) {
+                    $class = $resolver->resolve($name);
+
+                    if (
+                        $class !== null &&
+                        class_exists($class)
+                    ) {
+                        break;
+                    }
+                }
             }
 
             if (
@@ -218,7 +244,7 @@ class Handler
         }
 
         if (
-            $name === null &&
+            $names === null &&
             (new ReflectionClass($interface))->isInstantiable()
         ) {
             return $interface;

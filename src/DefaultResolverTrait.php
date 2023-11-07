@@ -16,6 +16,20 @@ trait DefaultResolverTrait
      */
     public function resolveDefault(): ?string
     {
-        return $this->resolve('Generic');
+        $parts = explode('\\', $this->getInterface());
+        $name = array_pop($parts);
+
+        foreach ([$name, 'Generic'] as $rName) {
+            $class = $this->resolve($rName);
+
+            if (
+                $class !== null &&
+                class_exists($class)
+            ) {
+                return $class;
+            }
+        }
+
+        return null;
     }
 }
