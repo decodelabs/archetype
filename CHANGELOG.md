@@ -1,3 +1,7 @@
+## v0.2.19 (2023-11-08)
+* Added NamespaceMap structure
+* Added namespace priority to extenstions
+
 ## v0.2.18 (2023-11-08)
 * Improved null handling in resolve()
 

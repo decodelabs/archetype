@@ -11,6 +11,7 @@ namespace DecodeLabs\Archetype\Resolver;
 
 use DecodeLabs\Archetype\DefaultResolver;
 use DecodeLabs\Archetype\DefaultResolverTrait;
+use DecodeLabs\Archetype\NamespaceMap;
 use DecodeLabs\Archetype\Scanner;
 use DecodeLabs\Archetype\ScannerTrait;
 use Generator;
@@ -25,10 +26,7 @@ class Generic implements Scanner, DefaultResolver
      */
     protected string $interface;
 
-    /**
-     * @var array<string>
-     */
-    protected array $namespaces = [];
+    protected NamespaceMap $namespaces;
 
 
     /**
@@ -40,6 +38,7 @@ class Generic implements Scanner, DefaultResolver
         string $interface
     ) {
         $this->interface = $interface;
+        $this->namespaces = new NamespaceMap();
     }
 
     /**
@@ -62,9 +61,10 @@ class Generic implements Scanner, DefaultResolver
      * Add namespace
      */
     public function addNamespace(
-        string $namespace
+        string $namespace,
+        int $priority = 0
     ): void {
-        $this->namespaces[] = $namespace;
+        $this->namespaces->add($namespace, $priority);
     }
 
     /**
