@@ -1,3 +1,4 @@
+## v0.2.18 (2023-11-08)
 * Improved null handling in resolve()
 
 ## v0.2.17 (2023-11-07)
