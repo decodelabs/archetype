@@ -140,7 +140,7 @@ class Handler
      *
      * @template T of object
      * @param class-string<T> $interface
-     * @param string|array<string>|null $names
+     * @param string|array<string|null>|null $names
      * @param class-string<T>|callable(class-string<T>): class-string<T>|null $default
      * @return class-string<T>
      */
@@ -165,7 +165,7 @@ class Handler
      *
      * @template T of object
      * @param class-string<T> $interface
-     * @param string|array<string>|null $names
+     * @param string|array<string|null>|null $names
      * @param class-string<T>|callable(class-string<T>): class-string<T>|null $default
      * @return class-string<T>
      */
@@ -185,6 +185,7 @@ class Handler
         // Name is a classname already
         foreach ($names ?? [] as $name) {
             if (
+                $name !== null &&
                 class_exists($name) &&
                 $this->isResolved($interface, $name)
             ) {
@@ -198,39 +199,36 @@ class Handler
         $this->ensureResolver($interface);
 
         foreach ($names ?? [] as $i => $name) {
-            $names[$i] = $this->normalize($interface, $name);
-        }
-
-        foreach ($this->resolvers[$interface] as $resolver) {
-            if ($names === null) {
-                if (!$resolver instanceof DefaultResolver) {
-                    continue;
-                }
-
-                $class = $resolver->resolveDefault();
-            } else {
-                $class = null;
-
-                foreach ($names as $name) {
-                    $class = $resolver->resolve($name);
-
-                    if (
-                        $class !== null &&
-                        class_exists($class)
-                    ) {
-                        break;
-                    }
-                }
-            }
-
-            if (
-                $class === null ||
-                !class_exists($class)
-            ) {
+            if ($name === null) {
                 continue;
             }
 
-            return $this->checkResolution($interface, $class);
+            $names[$i] = $this->normalize($interface, $name);
+        }
+
+        $nameList = $names ?? [null];
+
+        foreach ($this->resolvers[$interface] as $resolver) {
+            $class = null;
+
+            foreach ($nameList as $name) {
+                if ($name === null) {
+                    if (!$resolver instanceof DefaultResolver) {
+                        continue;
+                    }
+
+                    $class = $resolver->resolveDefault();
+                } else {
+                    $class = $resolver->resolve($name);
+                }
+
+                if (
+                    $class !== null &&
+                    class_exists($class)
+                ) {
+                    return $this->checkResolution($interface, $class);
+                }
+            }
         }
 
 
