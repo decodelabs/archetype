@@ -10,12 +10,15 @@ declare(strict_types=1);
 namespace DecodeLabs\Archetype;
 
 use ArrayIterator;
+use DecodeLabs\Glitch\Dumpable;
 use IteratorAggregate;
 
 /**
  * @implements IteratorAggregate<string>
  */
-class NamespaceMap implements IteratorAggregate
+class NamespaceMap implements
+    IteratorAggregate,
+    Dumpable
 {
     /**
      * @var array<string, int>
@@ -68,5 +71,13 @@ class NamespaceMap implements IteratorAggregate
         });
 
         return new ArrayIterator(array_keys($this->namespaces));
+    }
+
+    /**
+     * Dump for glitch
+     */
+    public function glitchDump(): iterable
+    {
+        yield 'values' => $this->namespaces;
     }
 }
