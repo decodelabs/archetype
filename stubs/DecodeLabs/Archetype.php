@@ -31,7 +31,7 @@ class Archetype implements Proxy
     {
         return static::$instance->registerCustomNormalizer(...func_get_args());
     }
-    public static function extend(string $interface, string $namespace): void
+    public static function extend(string $interface, string $namespace, int $priority = 0): void
     {
     }
     public static function resolve(string $interface, array|string|null $names = null, callable|string|null $default = null): string

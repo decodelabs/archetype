@@ -120,13 +120,14 @@ class Handler
      */
     public function extend(
         string $interface,
-        string $namespace
+        string $namespace,
+        int $priority = 0
     ): void {
         $this->ensureResolver($interface);
 
         foreach ($this->resolvers[$interface] as $resolver) {
             if ($resolver instanceof GenericResolver) {
-                $resolver->addNamespace($namespace);
+                $resolver->addNamespace($namespace, $priority);
                 return;
             }
         }
