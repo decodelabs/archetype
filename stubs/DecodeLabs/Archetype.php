@@ -21,7 +21,15 @@ class Archetype implements Proxy
 
     public static Inst $instance;
 
-    public static function register(Ref0|Ref1 $item): void
+    public static function getResolvers(): array
+    {
+        return static::$instance->getResolvers();
+    }
+    public static function getNormalizers(): array
+    {
+        return static::$instance->getNormalizers();
+    }
+    public static function register(Ref0|Ref1 $item, bool $unique = false): void
     {
     }
     public static function unregister(Ref0|Ref1 $item): void
