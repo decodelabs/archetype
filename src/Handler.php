@@ -31,10 +31,31 @@ class Handler
     protected array $normalizers = [];
 
     /**
+     * Get resolvers
+     *
+     * @return array<class-string, array<Resolver>>
+     */
+    public function getResolvers(): array
+    {
+        return $this->resolvers;
+    }
+
+    /**
+     * Get normalizers
+     *
+     * @return array<class-string, array<Normalizer>>
+     */
+    public function getNormalizers(): array
+    {
+        return $this->normalizers;
+    }
+
+    /**
      * Register resolver or pre-processor
      */
     public function register(
-        Resolver|Normalizer $item
+        Resolver|Normalizer $item,
+        bool $unique = false
     ): void {
         /** @var string $interface */
         $interface = $item->getInterface();
@@ -46,11 +67,19 @@ class Handler
             throw Exceptional::NotFound('Interface ' . $interface . ' does not exist');
         }
 
-        if ($interface !== Resolver::class) {
+        if (
+            !$unique &&
+            $interface !== Resolver::class
+        ) {
             $this->ensureResolver($interface);
         }
 
         $key = $this->getListKey($item);
+
+        if ($unique) {
+            $this->{$key}[$interface] = [$item];
+            return;
+        }
 
         $reorder = !empty($this->{$key}[$interface] ?? null);
         $this->{$key}[$interface][] = $item;

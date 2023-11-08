@@ -1,3 +1,8 @@
+## v0.2.20 (2023-11-08)
+* Added unique option to register()
+* Added getResolvers() and getNormalizers() to Handler
+* Improved NamespaceMap dump structure
+
 ## v0.2.19 (2023-11-08)
 * Added NamespaceMap structure
 * Added namespace priority to extenstions
