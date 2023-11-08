@@ -1,3 +1,4 @@
+## v0.2.19 (2023-11-08)
 * Added NamespaceMap structure
 * Added namespace priority to extenstions
 
