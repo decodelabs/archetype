@@ -1,3 +1,6 @@
+## v0.2.21 (2023-11-09)
+* Simplified ArchetypeResolver Initialization
+
 ## v0.2.20 (2023-11-08)
 * Added unique option to register()
 * Added getResolvers() and getNormalizers() to Handler

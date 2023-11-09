@@ -409,7 +409,9 @@ class Handler
         string $interface
     ): void {
         if (!isset($this->resolvers[$interface])) {
-            if (!$class = $this->resolve(Resolver::class, $interface)) {
+            if ($interface === Resolver::class) {
+                $class = ArchetypeResolver::class;
+            } elseif (!$class = $this->resolve(Resolver::class, $interface)) {
                 throw Exceptional::NotFound('Interface ' . $interface . ' has no Archetype resolver');
             }
 
@@ -422,6 +424,3 @@ class Handler
 
 // Register the Veneer facade
 Veneer::register(Handler::class, Archetype::class);
-
-// Load Archetype Resolver
-Archetype::register(new ArchetypeResolver());
