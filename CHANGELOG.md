@@ -1,3 +1,5 @@
+* Made PHP8.1 minimum version
+
 ## v0.2.21 (2023-11-09)
 * Simplified ArchetypeResolver Initialization
 
