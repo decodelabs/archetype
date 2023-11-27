@@ -373,8 +373,9 @@ class Handler
     /**
      * Scan Resolvers for available classes
      *
-     * @param class-string $interface
-     * @return Generator<string, class-string>
+     * @template T of object
+     * @param class-string<T> $interface
+     * @return Generator<string, class-string<T>>
      */
     public function scanClasses(
         string $interface
@@ -393,6 +394,7 @@ class Handler
                     continue;
                 }
 
+                /** @var class-string<T> $class */
                 yield $path => $class;
             }
         }

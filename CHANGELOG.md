@@ -1,3 +1,4 @@
+* Fixed scanClasses() iteration value generic type
 * Made PHP8.1 minimum version
 
 ## v0.2.21 (2023-11-09)
