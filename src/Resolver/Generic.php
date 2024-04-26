@@ -9,24 +9,22 @@ declare(strict_types=1);
 
 namespace DecodeLabs\Archetype\Resolver;
 
-use DecodeLabs\Archetype\DefaultResolver;
-use DecodeLabs\Archetype\DefaultResolverTrait;
-use DecodeLabs\Archetype\NamespaceMap;
-use DecodeLabs\Archetype\Scanner;
-use DecodeLabs\Archetype\ScannerTrait;
+use DecodeLabs\Archetype\NamespaceList;
+use DecodeLabs\Archetype\ResolverTrait;
 use Generator;
 
-class Generic implements Scanner, DefaultResolver
+class Generic implements Scanner, DefaultName
 {
+    use ResolverTrait;
     use ScannerTrait;
-    use DefaultResolverTrait;
+    use DefaultNameTrait;
 
     /**
      * @var class-string
      */
     protected string $interface;
 
-    protected NamespaceMap $namespaces;
+    protected NamespaceList $namespaceList;
 
 
     /**
@@ -38,7 +36,7 @@ class Generic implements Scanner, DefaultResolver
         string $interface
     ) {
         $this->interface = $interface;
-        $this->namespaces = new NamespaceMap();
+        $this->namespaceList = new NamespaceList();
     }
 
     /**
@@ -64,7 +62,7 @@ class Generic implements Scanner, DefaultResolver
         string $namespace,
         int $priority = 0
     ): void {
-        $this->namespaces->add($namespace, $priority);
+        $this->namespaceList->add($namespace, $priority);
     }
 
     /**
@@ -76,15 +74,9 @@ class Generic implements Scanner, DefaultResolver
         $name = str_replace('/', '\\', $name);
         $name = trim($name, '\\');
 
-        $classes = [
-            $this->interface . '\\' . $name
-        ];
+        foreach($this->namespaces->map($this->interface) as $namespace) {
+            $class = $namespace . '\\' . $name;
 
-        foreach ($this->namespaces as $namespace) {
-            $classes[] = $namespace . '\\' . $name;
-        }
-
-        foreach (array_reverse($classes) as $class) {
             if (class_exists($class)) {
                 return $class;
             }
@@ -101,7 +93,7 @@ class Generic implements Scanner, DefaultResolver
     {
         yield from $this->scanNamespaceClasses($this->interface);
 
-        foreach ($this->namespaces as $namespace) {
+        foreach ($this->namespaceList as $namespace) {
             yield from $this->scanNamespaceClasses($namespace, $this->interface);
         }
     }

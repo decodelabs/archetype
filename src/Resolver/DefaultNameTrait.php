@@ -7,9 +7,9 @@
 
 declare(strict_types=1);
 
-namespace DecodeLabs\Archetype;
+namespace DecodeLabs\Archetype\Resolver;
 
-trait DefaultResolverTrait
+trait DefaultNameTrait
 {
     /**
      * Resolve default Archetype class location

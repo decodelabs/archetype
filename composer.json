@@ -16,7 +16,6 @@
         "decodelabs/veneer": "^0.10.10"
     },
     "require-dev": {
-        "decodelabs/glitch": "^0.18.5",
         "decodelabs/phpstan-decodelabs": "^0.6.6"
     },
     "autoload": {
@@ -29,7 +28,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-develop": "0.2.x-dev"
+            "dev-develop": "0.3.x-dev"
         }
     }
 }

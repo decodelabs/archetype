@@ -1,4 +1,13 @@
-## v0.2.21 (2023-11-27)
+## v0.3.0 (2024-04-26)
+* Created Namespace Mapping system
+* Removed Extensions
+* Restructured class layout
+* Renamed Finder to FileFinder
+* Renamed DefaultResolver to DefaultName
+* Renamed NamespaceMap to NamespacedList
+* Updated dependency list
+
+## v0.2.22 (2023-11-27)
 * Fixed scanClasses() iteration value generic type
 * Made PHP8.1 minimum version
 

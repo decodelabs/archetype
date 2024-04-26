@@ -12,7 +12,10 @@ namespace DecodeLabs\Archetype;
 use DecodeLabs\Archetype;
 use DecodeLabs\Archetype\Normalizer\Generic as GenericNormalizer;
 use DecodeLabs\Archetype\Resolver\Archetype as ArchetypeResolver;
+use DecodeLabs\Archetype\Resolver\DefaultName as DefaultNameResolver;
+use DecodeLabs\Archetype\Resolver\FileFinder as FileFinder;
 use DecodeLabs\Archetype\Resolver\Generic as GenericResolver;
+use DecodeLabs\Archetype\Resolver\Scanner as ScannerResolver;
 use DecodeLabs\Exceptional;
 use DecodeLabs\Veneer;
 use Generator;
@@ -20,6 +23,8 @@ use ReflectionClass;
 
 class Handler
 {
+    protected NamespaceMap $namespaces;
+
     /**
      * @var array<class-string, array<Resolver>>
      */
@@ -29,6 +34,18 @@ class Handler
      * @var array<class-string, array<Normalizer>>
      */
     protected array $normalizers = [];
+
+    /**
+     * Get namespace map
+     */
+    public function getNamespaceMap(): NamespaceMap
+    {
+        if(!isset($this->namespaces)) {
+            $this->namespaces = new NamespaceMap();
+        }
+
+        return $this->namespaces;
+    }
 
     /**
      * Get resolvers
@@ -75,6 +92,10 @@ class Handler
         }
 
         $key = $this->getListKey($item);
+
+        if($item instanceof Resolver) {
+            $item->setNamespaceMap($this->getNamespaceMap());
+        }
 
         if ($unique) {
             $this->{$key}[$interface] = [$item];
@@ -142,26 +163,24 @@ class Handler
 
 
     /**
-     * Add namespace to Generic resolver
-     *
-     * @template T
-     * @param class-string<T> $interface
+     * Add namespace to map
      */
-    public function extend(
-        string $interface,
+    public function map(
+        string $root,
         string $namespace,
         int $priority = 0
     ): void {
-        $this->ensureResolver($interface);
+        $this->namespaces->add($root, $namespace, $priority);
+    }
 
-        foreach ($this->resolvers[$interface] as $resolver) {
-            if ($resolver instanceof GenericResolver) {
-                $resolver->addNamespace($namespace, $priority);
-                return;
-            }
-        }
-
-        throw Exceptional::NotFound('Interface ' . $interface . ' does not have a local resolver');
+    /**
+     * Add namespace alias
+     */
+    public function alias(
+        string $interface,
+        string $alias
+    ): void {
+        $this->namespaces->addAlias($interface, $alias);
     }
 
 
@@ -243,7 +262,7 @@ class Handler
 
             foreach ($nameList as $name) {
                 if ($name === null) {
-                    if (!$resolver instanceof DefaultResolver) {
+                    if (!$resolver instanceof DefaultNameResolver) {
                         continue;
                     }
 
@@ -353,7 +372,7 @@ class Handler
         $this->ensureResolver($interface);
 
         foreach ($this->resolvers[$interface] as $resolver) {
-            if (!$resolver instanceof Finder) {
+            if (!$resolver instanceof FileFinder) {
                 continue;
             }
 
@@ -383,7 +402,7 @@ class Handler
         $this->ensureResolver($interface);
 
         foreach ($this->resolvers[$interface] as $resolver) {
-            if (!$resolver instanceof Scanner) {
+            if (!$resolver instanceof ScannerResolver) {
                 continue;
             }
 
@@ -418,7 +437,8 @@ class Handler
             }
 
             /** @var class-string<Resolver> $class */
-            $this->resolvers[$interface][] = new $class($interface);
+            $this->resolvers[$interface][] = $resolver = new $class($interface);
+            $resolver->setNamespaceMap($this->getNamespaceMap());
         }
     }
 }

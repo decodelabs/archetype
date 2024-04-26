@@ -18,6 +18,12 @@ interface Resolver
 
     public function getPriority(): int;
 
+    public function setNamespaceMap(
+        NamespaceMap $map
+    ): void;
+
+    public function getNamespaceMap(): NamespaceMap;
+
     public function resolve(
         string $name
     ): ?string;

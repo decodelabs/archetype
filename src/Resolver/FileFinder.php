@@ -7,9 +7,11 @@
 
 declare(strict_types=1);
 
-namespace DecodeLabs\Archetype;
+namespace DecodeLabs\Archetype\Resolver;
 
-interface Finder extends Resolver
+use DecodeLabs\Archetype\Resolver;
+
+interface FileFinder extends Resolver
 {
     public function findFile(
         string $name
