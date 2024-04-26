@@ -74,7 +74,7 @@ class NamespaceMap
         string $interface,
         string $alias
     ): void {
-        if(!isset($this->aliases[$interface])) {
+        if (!isset($this->aliases[$interface])) {
             $this->aliases[$interface] = [];
         }
 
@@ -110,7 +110,7 @@ class NamespaceMap
         $output = new NamespaceList();
         $this->applyMap($namespace, $output);
 
-        foreach($this->aliases[$namespace] ?? [] as $alias) {
+        foreach ($this->aliases[$namespace] ?? [] as $alias) {
             $this->applyMap($alias, $output);
         }
 
@@ -125,7 +125,7 @@ class NamespaceMap
         $inner = [];
         $namespaces->add($namespace, -1);
 
-        while(!empty($parts)) {
+        while (!empty($parts)) {
             $root = implode('\\', $parts);
 
             if (isset($this->namespaces[$root])) {

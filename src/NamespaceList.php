@@ -68,9 +68,9 @@ class NamespaceList implements
         NamespaceList $list,
         ?string $mapTo = null,
     ): void {
-        foreach($list->namespaces as $namespace => $priority) {
-            if($mapTo !== null) {
-                $namespace .= '\\'.$mapTo;
+        foreach ($list->namespaces as $namespace => $priority) {
+            if ($mapTo !== null) {
+                $namespace .= '\\' . $mapTo;
             }
 
             $this->add($namespace, $priority);
