@@ -7,9 +7,11 @@
 
 declare(strict_types=1);
 
-namespace DecodeLabs\Archetype;
+namespace DecodeLabs\Archetype\Resolver;
 
-interface DefaultResolver extends Resolver
+use DecodeLabs\Archetype\Resolver;
+
+interface DefaultName extends Resolver
 {
     public function resolveDefault(): ?string;
 }

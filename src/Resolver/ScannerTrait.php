@@ -7,10 +7,9 @@
 
 declare(strict_types=1);
 
-namespace DecodeLabs\Archetype;
+namespace DecodeLabs\Archetype\Resolver;
 
 use Composer\Autoload\ClassLoader;
-
 use FilesystemIterator;
 use Generator;
 use RecursiveDirectoryIterator;

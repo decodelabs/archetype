@@ -1,3 +1,9 @@
+* Created Namespace Mapping system
+* Removed Extensions
+* Restructured class layout
+* Renamed Finder to FileFinder
+* Renamed DefaultResolver to DefaultName
+* Renamed NamespaceMap to NamespacedList
 * Updated dependency list
 
 ## v0.2.22 (2023-11-27)
