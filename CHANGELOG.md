@@ -1,3 +1,4 @@
+## v0.3.0 (2024-04-26)
 * Created Namespace Mapping system
 * Removed Extensions
 * Restructured class layout
