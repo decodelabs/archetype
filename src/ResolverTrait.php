@@ -21,7 +21,7 @@ trait ResolverTrait
 
     public function getNamespaceMap(): NamespaceMap
     {
-        if(!isset($this->namespaces)) {
+        if (!isset($this->namespaces)) {
             $this->namespaces = new NamespaceMap();
         }
 

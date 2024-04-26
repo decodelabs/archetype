@@ -170,7 +170,7 @@ class Handler
         string $namespace,
         int $priority = 0
     ): void {
-        $this->namespaces->add($root, $namespace, $priority);
+        $this->getNamespaceMap()->add($root, $namespace, $priority);
     }
 
     /**
@@ -180,7 +180,7 @@ class Handler
         string $interface,
         string $alias
     ): void {
-        $this->namespaces->addAlias($interface, $alias);
+        $this->getNamespaceMap()->addAlias($interface, $alias);
     }
 
 

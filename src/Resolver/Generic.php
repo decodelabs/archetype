@@ -74,7 +74,7 @@ class Generic implements Scanner, DefaultName
         $name = str_replace('/', '\\', $name);
         $name = trim($name, '\\');
 
-        foreach($this->namespaces->map($this->interface) as $namespace) {
+        foreach ($this->namespaces->map($this->interface) as $namespace) {
             $class = $namespace . '\\' . $name;
 
             if (class_exists($class)) {
