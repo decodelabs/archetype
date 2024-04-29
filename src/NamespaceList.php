@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace DecodeLabs\Archetype;
 
-use ArrayIterator;
 use Countable;
 use DecodeLabs\Glitch\Dumpable;
+use Generator;
 use IteratorAggregate;
 
 /**
@@ -88,15 +88,17 @@ class NamespaceList implements
     /**
      * Get iterator
      *
-     * @return ArrayIterator<int, string>
+     * @return Generator<int, string>
      */
-    public function getIterator(): ArrayIterator
+    public function getIterator(): Generator
     {
         uasort($this->namespaces, function ($a, $b) {
             return $a <=> $b;
         });
 
-        return new ArrayIterator(array_reverse(array_keys($this->namespaces)));
+        foreach (array_reverse($this->namespaces) as $namespace => $priority) {
+            yield $priority => $namespace;
+        }
     }
 
     /**
