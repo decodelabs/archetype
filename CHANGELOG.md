@@ -1,3 +1,9 @@
+## v0.3.4 (2024-04-29)
+* Improved namespace mapping algorithm
+* Upgraded namespace aliases to mount at any level
+* Enable recursive aliases
+* Added priority to aliases
+
 ## v0.3.3 (2024-04-29)
 * Fixed Veneer stubs in gitattributes
 

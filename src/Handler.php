@@ -177,9 +177,10 @@ class Handler
      */
     public function alias(
         string $interface,
-        string $alias
+        string $alias,
+        int $priority = 0
     ): void {
-        $this->getNamespaceMap()->addAlias($interface, $alias);
+        $this->getNamespaceMap()->addAlias($interface, $alias, $priority);
     }
 
 

@@ -17,7 +17,7 @@ class NamespaceMap
     protected array $namespaces = [];
 
     /**
-     * @var array<string, array<string>>
+     * @var array<string, NamespaceList>
      */
     protected array $aliases = [];
 
@@ -69,16 +69,20 @@ class NamespaceMap
 
     /**
      * Add alias
+     *
+     * @return $this
      */
     public function addAlias(
         string $interface,
-        string $alias
-    ): void {
+        string $alias,
+        int $priority = 0
+    ): static {
         if (!isset($this->aliases[$interface])) {
-            $this->aliases[$interface] = [];
+            $this->aliases[$interface] = new NamespaceList();
         }
 
-        $this->aliases[$interface][$alias] = $alias;
+        $this->aliases[$interface]->add($alias, $priority);
+        return $this;
     }
 
     /**
@@ -88,51 +92,97 @@ class NamespaceMap
         string $interface,
         string $alias
     ): bool {
-        return isset($this->aliases[$interface][$alias]);
+        return
+            isset($this->aliases[$interface]) &&
+            $this->aliases[$interface]->has($alias);
     }
 
     /**
      * Remove alias
+     *
+     * @return $this
      */
     public function removeAlias(
         string $interface,
         string $alias
-    ): void {
-        unset($this->aliases[$interface][$alias]);
+    ): static {
+        if (isset($this->aliases[$interface])) {
+            $this->aliases[$interface]->remove($alias);
+        }
+
+        return $this;
     }
 
     /**
      * Map namespace
      */
     public function map(
-        string $namespace
+        string $namespace,
+        bool $includeRoot = true
     ): NamespaceList {
         $output = new NamespaceList();
-        $this->applyMap($namespace, $output);
-
-        foreach ($this->aliases[$namespace] ?? [] as $alias) {
-            $this->applyMap($alias, $output);
-        }
-
+        $this->applyMap($namespace, $output, -1, $includeRoot);
         return $output;
     }
 
     protected function applyMap(
         string $namespace,
-        NamespaceList $namespaces
+        NamespaceList $namespaces,
+        int $priority = 0,
+        bool $includeRoot = true
     ): NamespaceList {
+        // Import root
+        if ($includeRoot) {
+            $namespaces->add($namespace, $priority);
+        }
+
         $parts = explode('\\', $namespace);
         $inner = [];
-        $namespaces->add($namespace, -1);
 
         while (!empty($parts)) {
             $root = implode('\\', $parts);
 
+            // Import root maps
             if (isset($this->namespaces[$root])) {
                 $mapTo = empty($inner) ? null : implode('\\', $inner);
                 $namespaces->import($this->namespaces[$root], $mapTo, $namespace);
             }
 
+
+            // Aliases
+            $wild = false;
+            $key = null;
+
+            if (
+                isset($this->aliases[$root . '\\*']) &&
+                // Wildcards only make sense for one level
+                count($inner) <= 1
+            ) {
+                $key = $root . '\\*';
+                $wild = true;
+            } elseif (isset($this->aliases[$root])) {
+                $key = $root;
+            }
+
+            if ($key !== null) {
+                foreach ($this->aliases[$key] ?? [] as $priority => $alias) {
+                    $append = $inner;
+
+                    if ($wild) {
+                        array_pop($append);
+                    }
+
+                    if (!empty($append)) {
+                        $alias .= '\\' . implode('\\', $append);
+                    }
+
+                    $this->applyMap($alias, $namespaces, $priority);
+                }
+
+                return $namespaces;
+            }
+
+            // Shift parts
             array_unshift($inner, array_pop($parts));
         }
 
