@@ -1,3 +1,4 @@
+## v0.3.4 (2024-04-29)
 * Improved namespace mapping algorithm
 * Upgraded namespace aliases to mount at any level
 * Enable recursive aliases
