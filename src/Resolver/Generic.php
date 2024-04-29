@@ -24,8 +24,6 @@ class Generic implements Scanner, DefaultName
      */
     protected string $interface;
 
-    protected NamespaceList $namespaceList;
-
 
     /**
      * Init with interface
@@ -36,7 +34,6 @@ class Generic implements Scanner, DefaultName
         string $interface
     ) {
         $this->interface = $interface;
-        $this->namespaceList = new NamespaceList();
     }
 
     /**
@@ -53,16 +50,6 @@ class Generic implements Scanner, DefaultName
     public function getPriority(): int
     {
         return 20;
-    }
-
-    /**
-     * Add namespace
-     */
-    public function addNamespace(
-        string $namespace,
-        int $priority = 0
-    ): void {
-        $this->namespaceList->add($namespace, $priority);
     }
 
     /**
@@ -91,9 +78,7 @@ class Generic implements Scanner, DefaultName
      */
     public function scanClasses(): Generator
     {
-        yield from $this->scanNamespaceClasses($this->interface);
-
-        foreach ($this->namespaceList as $namespace) {
+        foreach ($this->namespaces->map($this->interface) as $namespace) {
             yield from $this->scanNamespaceClasses($namespace, $this->interface);
         }
     }

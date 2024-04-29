@@ -67,8 +67,16 @@ class NamespaceList implements
     public function import(
         NamespaceList $list,
         ?string $mapTo = null,
+        ?string $filter = null
     ): void {
         foreach ($list->namespaces as $namespace => $priority) {
+            if (
+                $filter !== null &&
+                str_starts_with($filter, $namespace)
+            ) {
+                continue;
+            }
+
             if ($mapTo !== null) {
                 $namespace .= '\\' . $mapTo;
             }
