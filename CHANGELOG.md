@@ -1,3 +1,6 @@
+* Fixed Generic Resolver class scanner
+* Added namespace map filter check
+
 ## v0.3.1 (2024-04-26)
 * Fixed namespaceMap accessor
 

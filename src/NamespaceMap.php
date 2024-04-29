@@ -130,7 +130,7 @@ class NamespaceMap
 
             if (isset($this->namespaces[$root])) {
                 $mapTo = empty($inner) ? null : implode('\\', $inner);
-                $namespaces->import($this->namespaces[$root], $mapTo);
+                $namespaces->import($this->namespaces[$root], $mapTo, $namespace);
             }
 
             array_unshift($inner, array_pop($parts));
