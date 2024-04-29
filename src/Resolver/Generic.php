@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace DecodeLabs\Archetype\Resolver;
 
-use DecodeLabs\Archetype\NamespaceList;
 use DecodeLabs\Archetype\ResolverTrait;
 use Generator;
 

@@ -14,7 +14,6 @@ use DecodeLabs\Archetype\Normalizer\Generic as GenericNormalizer;
 use DecodeLabs\Archetype\Resolver\Archetype as ArchetypeResolver;
 use DecodeLabs\Archetype\Resolver\DefaultName as DefaultNameResolver;
 use DecodeLabs\Archetype\Resolver\FileFinder as FileFinder;
-use DecodeLabs\Archetype\Resolver\Generic as GenericResolver;
 use DecodeLabs\Archetype\Resolver\Scanner as ScannerResolver;
 use DecodeLabs\Exceptional;
 use DecodeLabs\Veneer;
@@ -40,7 +39,7 @@ class Handler
      */
     public function getNamespaceMap(): NamespaceMap
     {
-        if(!isset($this->namespaces)) {
+        if (!isset($this->namespaces)) {
             $this->namespaces = new NamespaceMap();
         }
 
@@ -93,7 +92,7 @@ class Handler
 
         $key = $this->getListKey($item);
 
-        if($item instanceof Resolver) {
+        if ($item instanceof Resolver) {
             $item->setNamespaceMap($this->getNamespaceMap());
         }
 

@@ -1,3 +1,6 @@
+## v0.3.3 (2024-04-29)
+* Fixed Veneer stubs in gitattributes
+
 ## v0.3.2 (2024-04-29)
 * Fixed Generic Resolver class scanner
 * Added namespace map filter check
