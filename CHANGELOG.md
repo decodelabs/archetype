@@ -1,3 +1,4 @@
+## v0.3.5 (2024-05-21)
 * Improved default name resolver
 
 ## v0.3.4 (2024-04-29)
