@@ -19,15 +19,21 @@ trait DefaultNameTrait
         $parts = explode('\\', $this->getInterface());
         $name = array_pop($parts);
 
-        foreach ([$name, 'Generic'] as $rName) {
-            $class = $this->resolve($rName);
+        foreach ($this->namespaces->map(implode('\\', $parts), false) as $namespace) {
+            $class = $namespace . '\\' . $name;
 
-            if (
-                $class !== null &&
-                class_exists($class)
-            ) {
+            if (class_exists($class)) {
                 return $class;
             }
+        }
+
+        $class = $this->resolve('Generic');
+
+        if (
+            $class !== null &&
+            class_exists($class)
+        ) {
+            return $class;
         }
 
         return null;

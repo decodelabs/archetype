@@ -1,3 +1,6 @@
+## v0.3.5 (2024-05-21)
+* Improved default name resolver
+
 ## v0.3.4 (2024-04-29)
 * Improved namespace mapping algorithm
 * Upgraded namespace aliases to mount at any level
