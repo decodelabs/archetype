@@ -1,3 +1,5 @@
+* Updated Veneer dependency
+
 ## v0.3.5 (2024-05-21)
 * Improved default name resolver
 
