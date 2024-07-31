@@ -14,7 +14,6 @@ use FilesystemIterator;
 use Generator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-use ReflectionClass;
 
 trait ScannerTrait
 {
@@ -92,9 +91,7 @@ trait ScannerTrait
             }
 
             if ($interface !== null) {
-                $ref = new ReflectionClass($class);
-
-                if (!$ref->implementsInterface($interface)) {
+                if (!is_a($class, $interface, true)) {
                     continue;
                 }
             }

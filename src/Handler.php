@@ -407,9 +407,7 @@ class Handler
             }
 
             foreach ($resolver->scanClasses() as $path => $class) {
-                $ref = new ReflectionClass($class);
-
-                if (!$ref->implementsInterface($interface)) {
+                if (!is_a($class, $interface, true)) {
                     continue;
                 }
 
