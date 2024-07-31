@@ -1,3 +1,4 @@
+## v0.3.7 (2024-07-31)
 * Allow abstract classes as scanner interfaces
 
 ## v0.3.6 (2024-07-17)
