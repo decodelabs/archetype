@@ -1,3 +1,5 @@
+* Allow abstract classes as scanner interfaces
+
 ## v0.3.6 (2024-07-17)
 * Updated Veneer dependency
 
