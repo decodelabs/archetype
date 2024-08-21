@@ -1,3 +1,5 @@
+* Updated Veneer dependency and Stub
+
 ## v0.3.7 (2024-07-31)
 * Allow abstract classes as scanner interfaces
 
