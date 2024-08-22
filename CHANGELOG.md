@@ -1,3 +1,4 @@
+* Added @phpstan-require-implements constraints
 * Updated Veneer dependency and Stub
 
 ## v0.3.7 (2024-07-31)

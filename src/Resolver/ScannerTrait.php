@@ -15,6 +15,9 @@ use Generator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
+/**
+ * @phpstan-require-implements Scanner
+ */
 trait ScannerTrait
 {
     /**
