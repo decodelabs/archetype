@@ -17,40 +17,40 @@ class Archetype implements Proxy
 {
     use ProxyTrait;
 
-    const Veneer = 'DecodeLabs\\Archetype';
-    const VeneerTarget = Inst::class;
+    public const Veneer = 'DecodeLabs\\Archetype';
+    public const VeneerTarget = Inst::class;
 
-    public static Inst $instance;
+    protected static Inst $_veneerInstance;
 
     public static function getNamespaceMap(): Ref0 {
-        return static::$instance->getNamespaceMap();
+        return static::$_veneerInstance->getNamespaceMap();
     }
     public static function getResolvers(): array {
-        return static::$instance->getResolvers();
+        return static::$_veneerInstance->getResolvers();
     }
     public static function getNormalizers(): array {
-        return static::$instance->getNormalizers();
+        return static::$_veneerInstance->getNormalizers();
     }
     public static function register(Ref1|Ref2 $item, bool $unique = false): void {}
     public static function unregister(Ref1|Ref2 $item): void {}
     public static function registerCustomNormalizer(string $interface, callable $normalizer, int $priority = 10): Ref2 {
-        return static::$instance->registerCustomNormalizer(...func_get_args());
+        return static::$_veneerInstance->registerCustomNormalizer(...func_get_args());
     }
     public static function map(string $root, string $namespace, int $priority = 0): void {}
     public static function alias(string $interface, string $alias, int $priority = 0): void {}
     public static function resolve(string $interface, array|string|null $names = NULL, callable|string|null $default = NULL): string {
-        return static::$instance->resolve(...func_get_args());
+        return static::$_veneerInstance->resolve(...func_get_args());
     }
     public static function tryResolve(string $interface, array|string|null $names = NULL, callable|string|null $default = NULL): ?string {
-        return static::$instance->tryResolve(...func_get_args());
+        return static::$_veneerInstance->tryResolve(...func_get_args());
     }
     public static function normalize(string $interface, string $name): string {
-        return static::$instance->normalize(...func_get_args());
+        return static::$_veneerInstance->normalize(...func_get_args());
     }
     public static function findFile(string $interface, string $name): string {
-        return static::$instance->findFile(...func_get_args());
+        return static::$_veneerInstance->findFile(...func_get_args());
     }
     public static function scanClasses(string $interface): Ref3 {
-        return static::$instance->scanClasses(...func_get_args());
+        return static::$_veneerInstance->scanClasses(...func_get_args());
     }
 };

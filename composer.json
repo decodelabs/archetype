@@ -13,7 +13,7 @@
 
         "decodelabs/exceptional": "^0.5",
         "decodelabs/glitch-support": "^0.5",
-        "decodelabs/veneer": "^0.11.6"
+        "decodelabs/veneer": "^0.12.1"
     },
     "require-dev": {
         "decodelabs/phpstan-decodelabs": "^0.7"

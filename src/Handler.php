@@ -90,22 +90,23 @@ class Handler
             $this->ensureResolver($interface);
         }
 
-        $key = $this->getListKey($item);
-
-        if ($item instanceof Resolver) {
+        if($item instanceof Resolver) {
             $item->setNamespaceMap($this->getNamespaceMap());
+            $list = &$this->resolvers;
+        } else {
+            $list = &$this->normalizers;
         }
 
         if ($unique) {
-            $this->{$key}[$interface] = [$item];
+            $list[$interface] = [$item];
             return;
         }
 
-        $reorder = !empty($this->{$key}[$interface] ?? null);
-        $this->{$key}[$interface][] = $item;
+        $reorder = !empty($list[$interface] ?? null);
+        $list[$interface][] = $item;
 
         if ($reorder) {
-            usort($this->{$key}[$interface], function ($a, $b) {
+            usort($list[$interface], function ($a, $b) {
                 return $a->getPriority() <=> $b->getPriority();
             });
         }
@@ -118,11 +119,16 @@ class Handler
         Resolver|Normalizer $item
     ): void {
         $interface = $item->getInterface();
-        $key = $this->getListKey($item);
 
-        foreach ($this->{$key}[$interface] ?? [] as $key => $registered) {
+        if($item instanceof Resolver) {
+            $list = &$this->resolvers;
+        } else {
+            $list = &$this->normalizers;
+        }
+
+        foreach ($list[$interface] ?? [] as $key => $registered) {
             if ($registered === $item) {
-                unset($this->{$key}[$interface][$key]);
+                unset($list[$interface][$key]);
                 break;
             }
         }
@@ -150,15 +156,6 @@ class Handler
         return $normalizer;
     }
 
-    protected function getListKey(
-        Resolver|Normalizer $item
-    ): string {
-        if ($item instanceof Resolver) {
-            return 'resolvers';
-        } else {
-            return 'normalizers';
-        }
-    }
 
 
     /**
@@ -282,7 +279,10 @@ class Handler
 
 
         // Default
-        if (is_callable($default)) {
+        if (
+            !is_string($default) &&
+            $default !== null
+        ) {
             $default = (string)$default($interface);
         }
 
@@ -443,4 +443,7 @@ class Handler
 
 
 // Register the Veneer facade
-Veneer::register(Handler::class, Archetype::class);
+Veneer\Manager::getGlobalManager()->register(
+    Handler::class,
+    Archetype::class
+);
