@@ -80,7 +80,9 @@ class Handler
             !interface_exists($interface) &&
             !class_exists($interface)
         ) {
-            throw Exceptional::NotFound('Interface ' . $interface . ' does not exist');
+            throw Exceptional::NotFound(
+                message: 'Interface ' . $interface . ' does not exist'
+            );
         }
 
         if (
@@ -200,7 +202,9 @@ class Handler
                 $names = implode(', ', $names);
             }
 
-            throw Exceptional::NotFound('Could not resolve ' . ($names ? '"' . $names . '"' : 'default') . ' for interface ' . $interface);
+            throw Exceptional::NotFound(
+                message: 'Could not resolve ' . ($names ? '"' . $names . '"' : 'default') . ' for interface ' . $interface
+            );
         }
 
         return $class;
@@ -385,7 +389,9 @@ class Handler
             }
         }
 
-        throw Exceptional::NotFound('Could not find file "' . $name . '" in namespace ' . $interface);
+        throw Exceptional::NotFound(
+            message: 'Could not find file "' . $name . '" in namespace ' . $interface
+        );
     }
 
 
@@ -431,7 +437,9 @@ class Handler
             if ($interface === Resolver::class) {
                 $class = ArchetypeResolver::class;
             } elseif (!$class = $this->resolve(Resolver::class, $interface)) {
-                throw Exceptional::NotFound('Interface ' . $interface . ' has no Archetype resolver');
+                throw Exceptional::NotFound(
+                    message: 'Interface ' . $interface . ' has no Archetype resolver'
+                );
             }
 
             /** @var class-string<Resolver> $class */

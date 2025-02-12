@@ -1,3 +1,5 @@
+* Improved Exception syntax
+
 ## v0.3.8 (2025-02-12)
 * Upgraded PHPStan to v2
 * Added @phpstan-require-implements constraints
