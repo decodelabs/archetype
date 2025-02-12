@@ -20,12 +20,17 @@ class Generic implements Normalizer
     protected string $interface;
 
     protected int $priority = 10;
+
+    /**
+     * @var Closure(string,class-string): ?string
+     */
     protected Closure $normalizer;
 
     /**
      * Init with callable
      *
      * @param class-string $interface
+     * @param callable(string,class-string): ?string $normalizer
      */
     public function __construct(
         string $interface,

@@ -9,6 +9,9 @@ declare(strict_types=1);
 
 namespace DecodeLabs\Archetype;
 
+/**
+ * @phpstan-require-implements Resolver
+ */
 trait ResolverTrait
 {
     protected NamespaceMap $namespaces;

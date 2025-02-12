@@ -1,3 +1,10 @@
+## v0.3.8 (2025-02-12)
+* Upgraded PHPStan to v2
+* Added @phpstan-require-implements constraints
+* Updated Veneer dependency and Stub
+* Added PHP8.4 to CI workflow
+* Made PHP8.4 minimum version
+
 ## v0.3.7 (2024-07-31)
 * Allow abstract classes as scanner interfaces
 

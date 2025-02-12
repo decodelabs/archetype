@@ -9,6 +9,9 @@ declare(strict_types=1);
 
 namespace DecodeLabs\Archetype\Resolver;
 
+/**
+ * @phpstan-require-implements DefaultName
+ */
 trait DefaultNameTrait
 {
     /**
