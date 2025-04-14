@@ -1,3 +1,8 @@
+## v0.3.9 (2025-04-14)
+* Added contains() and localize() to NamespaceList
+* Improved Exception syntax
+* Updated dependencies
+
 ## v0.3.8 (2025-02-12)
 * Upgraded PHPStan to v2
 * Added @phpstan-require-implements constraints

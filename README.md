@@ -7,11 +7,9 @@
 [![PHPStan](https://img.shields.io/badge/PHPStan-enabled-44CC11.svg?longCache=true&style=flat)](https://github.com/phpstan/phpstan)
 [![License](https://img.shields.io/packagist/l/decodelabs/archetype?style=flat)](https://packagist.org/packages/decodelabs/archetype)
 
-### Simple named library loader for PHP
+### Simple class name resolution for PHP
 
 Archetype provides a generic frontend to resolving implementation classes for a named interface with an extensible plugin architechture.
-
-_Get news and updates on the [DecodeLabs blog](https://blog.decodelabs.com/tag/decodelabs-archetype)._
 
 ---
 
@@ -24,14 +22,6 @@ composer require decodelabs/archetype
 ```
 
 ## Usage
-
-### Importing
-
-Archetype uses [Veneer](https://github.com/decodelabs/veneer) to provide a unified frontage under <code>DecodeLabs\Archetype</code>.
-You can access all the primary functionality via this static frontage without compromising testing and dependency injection.
-
-
-### Functionality
 
 Use Archetype when designing plugin oriented libraries that need to load arbitrary extension classes based on a naming convention.
 
@@ -89,16 +79,16 @@ namespace My\App
 
 ## Resolvers
 
-Archetype uses a hierarchy of <code>Resolvers</code> to turn a name into a class. By default, the <code>Handler</code> will fall back on a <code>Resolver\Generic</code> instance that simply locates the named class within the namespace of the associated interface.
+Archetype uses a hierarchy of `Resolvers` to turn a name into a class. By default, the `Handler` will fall back on a generic resolver that simply locates the named class within the namespace of the associated interface.
 
-In the above example, the implementations of the <code>My\Library\Thing</code> can be found at <code>My\Library\Thing\\*</code>.
+In the above example, the implementations of the `My\Library\Thing` can be found at `My\Library\Thing\\*`.
 
 
 ### Custom resolvers
 
-The <code>Resolver\Archetype</code> implementation however will also automatically look for custom <code>Resolver</code> classes in the same location as the target interface, named <code>\<Interface\>Archetype</code>.
+The `Resolver\Archetype` implementation however will also automatically look for custom `Resolver` classes in the same location as the target interface, named `\<Interface\>Archetype`.
 
-The following example will replace the default functionality and cause Archetype to look in a different location for the <code>Thing</code> implementations:
+The following example will replace the default functionality and cause Archetype to look in a different location for the `Thing` implementations:
 
 ```php
 namespace My\Library {
@@ -128,9 +118,9 @@ namespace My\Library {
 
 ### Multiple resolvers
 
-Multiple <code>Resolver</code> instances can be stacked against a single interface, called in series based on the priority they request, the first one to return a non-null class name wins.
+Multiple `Resolver` instances can be stacked against a single interface, called in series based on the priority they request, the first one to return a non-null class name wins.
 
-Alternative <code>Resolvers</code> can be loaded with:
+Alternative `Resolvers` can be loaded with:
 
 ```php
 use DecodeLabs\Archetype;
@@ -139,13 +129,26 @@ use My\Library\Resolver\Alternative as AlternativeResolver;
 Archetype::register(new AlternativeResolver());
 ```
 
+### Class scanning
+
+Some resolvers (including the default one) can scan and list all classes resolvable under a namespace.
+
+```php
+use DecodeLabs\Archetype;
+
+foreach(Archetype::scanClasses(Thing::class) as $path => $class) {
+    echo 'Found class: '.$class.' at '.$path.PHP_EOL;
+}
+```
+
+
 ### File lookup
 
-<code>Resolvers</code> that also implement the <code>Finder</code> interface can define the means to lookup a file path based on the provided name, against the space defined by the target interface.
+`Resolvers` that also implement the `Finder` interface can define the means to lookup a file path based on the provided name, against the space defined by the target interface.
 
 This can be useful when the _space_ that is defined by the root interface may contain assets aside from PHP code.
 
-It is down to the implementation to decide how to map names to file paths (there are no pre-built default <code>Finder</code> classes).
+It is down to the implementation to decide how to map names to file paths (there are no pre-built default `Finder` classes).
 
 Example:
 
