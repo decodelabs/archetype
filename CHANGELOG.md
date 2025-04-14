@@ -1,3 +1,5 @@
+## v0.3.9 (2025-04-14)
+* Added contains() and localize() to NamespaceList
 * Improved Exception syntax
 * Updated dependencies
 

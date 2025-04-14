@@ -23,7 +23,7 @@ class NamespaceList implements
     Dumpable
 {
     /**
-     * @var array<string, int>
+     * @var array<string,int>
      */
     protected array $namespaces = [];
 
@@ -60,6 +60,47 @@ class NamespaceList implements
         unset($this->namespaces[$namespace]);
         return $this;
     }
+
+
+    /**
+     * List contains namespace or class
+     */
+    public function contains(
+        string $namespace,
+    ): bool {
+        if(isset($this->namespaces[$namespace])) {
+            return true;
+        }
+
+        foreach ($this->namespaces as $ns => $priority) {
+            if (str_starts_with($namespace, $ns.'\\')) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    /**
+     * Remove namespace prefix from class
+     */
+    public function localize(
+        string $namespace
+    ): ?string {
+        if(isset($this->namespaces[$namespace])) {
+            return '';
+        }
+
+        foreach ($this->namespaces as $ns => $priority) {
+            if (str_starts_with($namespace, $ns.'\\')) {
+                return substr($namespace, strlen($ns) + 1);
+            }
+        }
+
+        return null;
+    }
+
 
     /**
      * Import another list
