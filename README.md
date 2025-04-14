@@ -11,8 +11,6 @@
 
 Archetype provides a generic frontend to resolving implementation classes for a named interface with an extensible plugin architechture.
 
-_Get news and updates on the [DecodeLabs blog](https://blog.decodelabs.com/tag/decodelabs-archetype)._
-
 ---
 
 ## Installation
