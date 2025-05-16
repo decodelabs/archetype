@@ -1,138 +1,320 @@
-## v0.3.9 (2025-04-14)
-* Added contains() and localize() to NamespaceList
-* Improved Exception syntax
-* Updated dependencies
+# Changelog
 
-## v0.3.8 (2025-02-12)
-* Upgraded PHPStan to v2
-* Added @phpstan-require-implements constraints
-* Updated Veneer dependency and Stub
-* Added PHP8.4 to CI workflow
-* Made PHP8.4 minimum version
+All notable changes to this project will be documented in this file.<br>
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v0.3.7 (2024-07-31)
-* Allow abstract classes as scanner interfaces
+## Unreleased
+--
 
-## v0.3.6 (2024-07-17)
-* Updated Veneer dependency
+---
 
-## v0.3.5 (2024-05-21)
-* Improved default name resolver
+### [v0.3.9](https://github.com/decodelabs/archetype/commits/v0.3.9) - 14th April 2025
 
-## v0.3.4 (2024-04-29)
-* Improved namespace mapping algorithm
-* Upgraded namespace aliases to mount at any level
-* Enable recursive aliases
-* Added priority to aliases
+- Added contains() and localize() to NamespaceList
+- Improved Exception syntax
+- Updated dependencies
 
-## v0.3.3 (2024-04-29)
-* Fixed Veneer stubs in gitattributes
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.3.8...v0.3.9)
 
-## v0.3.2 (2024-04-29)
-* Fixed Generic Resolver class scanner
-* Added namespace map filter check
+---
 
-## v0.3.1 (2024-04-26)
-* Fixed namespaceMap accessor
+### [v0.3.8](https://github.com/decodelabs/archetype/commits/v0.3.8) - 12th February 2025
 
-## v0.3.0 (2024-04-26)
-* Created Namespace Mapping system
-* Removed Extensions
-* Restructured class layout
-* Renamed Finder to FileFinder
-* Renamed DefaultResolver to DefaultName
-* Renamed NamespaceMap to NamespacedList
-* Updated dependency list
+- Upgraded PHPStan to v2
+- Added @phpstan-require-implements constraints
+- Updated Veneer dependency and Stub
+- Added PHP8.4 to CI workflow
+- Made PHP8.4 minimum version
 
-## v0.2.22 (2023-11-27)
-* Fixed scanClasses() iteration value generic type
-* Made PHP8.1 minimum version
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.3.7...v0.3.8)
 
-## v0.2.21 (2023-11-09)
-* Simplified ArchetypeResolver Initialization
+---
 
-## v0.2.20 (2023-11-08)
-* Added unique option to register()
-* Added getResolvers() and getNormalizers() to Handler
-* Improved NamespaceMap dump structure
+### [v0.3.7](https://github.com/decodelabs/archetype/commits/v0.3.7) - 31st July 2024
 
-## v0.2.19 (2023-11-08)
-* Added NamespaceMap structure
-* Added namespace priority to extenstions
+- Allow abstract classes as scanner interfaces
 
-## v0.2.18 (2023-11-08)
-* Improved null handling in resolve()
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.3.6...v0.3.7)
 
-## v0.2.17 (2023-11-07)
-* Added support for resolving array of names
-* Look for namespace short name as default resolution
+---
 
-## v0.2.16 (2023-10-30)
-* Improved default interface resolution
+### [v0.3.6](https://github.com/decodelabs/archetype/commits/v0.3.6) - 17th July 2024
 
-## v0.2.15 (2023-10-30)
-* Use interface for default resolver if instantiable
+- Updated Veneer dependency
 
-## v0.2.14 (2023-10-29)
-* Added default resolver interface for nameless resolution
-* Refactored package file structure
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.3.5...v0.3.6)
 
-## v0.2.13 (2023-09-26)
-* Converted phpstan doc comments to generic
+---
 
-## v0.2.12 (2022-12-06)
-* Improved resolution subclass check
+### [v0.3.5](https://github.com/decodelabs/archetype/commits/v0.3.5) - 21st May 2024
 
-## v0.2.11 (2022-11-28)
-* Added default fallback to resolve handler
+- Improved default name resolver
 
-## v0.2.10 (2022-11-22)
-* Added normalizer interface structure
-* Renamed Local resolver to Generic
-* Added extension namespaces to Generic resolver
-* Fixed PHP8.1 testing
-* Migrated to use effigy in CI workflow
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.3.4...v0.3.5)
 
-## v0.2.9 (2022-10-28)
-* Added interface check to class scanner
+---
 
-## v0.2.8 (2022-10-17)
-* Auto register local resolver when registering extension
+### [v0.3.4](https://github.com/decodelabs/archetype/commits/v0.3.4) - 29th April 2024
 
-## v0.2.7 (2022-10-17)
-* Added class scanner interface
+- Improved namespace mapping algorithm
+- Upgraded namespace aliases to mount at any level
+- Enable recursive aliases
+- Added priority to aliases
 
-## v0.2.6 (2022-10-12)
-* Added Extension Resolver
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.3.3...v0.3.4)
 
-## v0.2.5 (2022-09-28)
-* Added check to resolve $name as subclass
+---
 
-## v0.2.4 (2022-09-27)
-* Updated Veneer stub
-* Updated composer check script
+### [v0.3.3](https://github.com/decodelabs/archetype/commits/v0.3.3) - 29th April 2024
 
-## v0.2.3 (2022-09-27)
-* Updated Veneer dependency
+- Fixed Veneer stubs in gitattributes
 
-## v0.2.2 (2022-08-26)
-* Fixed resolve() PHPStan return hint
-* Updated CI environment
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.3.2...v0.3.3)
 
-## v0.2.1 (2022-08-23)
-* Added concrete types to all members
+---
 
-## v0.2.0 (2022-08-23)
-* Removed PHP7 compatibility
-* Updated ECS to v11
-* Updated PHPUnit to v9
+### [v0.3.2](https://github.com/decodelabs/archetype/commits/v0.3.2) - 29th April 2024
 
-## v0.1.1 (2022-03-09)
-* Transitioned from Travis to GHA
-* Updated PHPStan and ECS dependencies
+- Fixed Generic Resolver class scanner
+- Added namespace map filter check
 
-## v0.1.0 (2021-11-18)
-* Added initial boilerplate
-* Built Resolver Handler and structure
-* Added simple Finder interface
-* Built Archetype and Local Resolver implementations
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.3.1...v0.3.2)
+
+---
+
+### [v0.3.1](https://github.com/decodelabs/archetype/commits/v0.3.1) - 26th April 2024
+
+- Fixed namespaceMap accessor
+
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.3.0...v0.3.1)
+
+---
+
+### [v0.3.0](https://github.com/decodelabs/archetype/commits/v0.3.0) - 26th April 2024
+
+- Created Namespace Mapping system
+- Removed Extensions
+- Restructured class layout
+- Renamed Finder to FileFinder
+- Renamed DefaultResolver to DefaultName
+- Renamed NamespaceMap to NamespacedList
+- Updated dependency list
+
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.2.22...v0.3.0)
+
+---
+
+### [v0.2.22](https://github.com/decodelabs/archetype/commits/v0.2.22) - 27th November 2023
+
+- Fixed scanClasses() iteration value generic type
+- Made PHP8.1 minimum version
+
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.2.21...v0.2.22)
+
+---
+
+### [v0.2.21](https://github.com/decodelabs/archetype/commits/v0.2.21) - 9th November 2023
+
+- Simplified ArchetypeResolver Initialization
+
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.2.20...v0.2.21)
+
+---
+
+### [v0.2.20](https://github.com/decodelabs/archetype/commits/v0.2.20) - 8th November 2023
+
+- Added unique option to register()
+- Added getResolvers() and getNormalizers() to Handler
+- Improved NamespaceMap dump structure
+
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.2.19...v0.2.20)
+
+---
+
+### [v0.2.19](https://github.com/decodelabs/archetype/commits/v0.2.19) - 8th November 2023
+
+- Added NamespaceMap structure
+- Added namespace priority to extenstions
+
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.2.18...v0.2.19)
+
+---
+
+### [v0.2.18](https://github.com/decodelabs/archetype/commits/v0.2.18) - 8th November 2023
+
+- Improved null handling in resolve()
+
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.2.17...v0.2.18)
+
+---
+
+### [v0.2.17](https://github.com/decodelabs/archetype/commits/v0.2.17) - 7th November 2023
+
+- Added support for resolving array of names
+- Look for namespace short name as default resolution
+
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.2.16...v0.2.17)
+
+---
+
+### [v0.2.16](https://github.com/decodelabs/archetype/commits/v0.2.16) - 30th October 2023
+
+- Improved default interface resolution
+
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.2.15...v0.2.16)
+
+---
+
+### [v0.2.15](https://github.com/decodelabs/archetype/commits/v0.2.15) - 30th October 2023
+
+- Use interface for default resolver if instantiable
+
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.2.14...v0.2.15)
+
+---
+
+### [v0.2.14](https://github.com/decodelabs/archetype/commits/v0.2.14) - 29th October 2023
+
+- Added default resolver interface for nameless resolution
+- Refactored package file structure
+
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.2.13...v0.2.14)
+
+---
+
+### [v0.2.13](https://github.com/decodelabs/archetype/commits/v0.2.13) - 26th September 2023
+
+- Converted phpstan doc comments to generic
+
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.2.12...v0.2.13)
+
+---
+
+### [v0.2.12](https://github.com/decodelabs/archetype/commits/v0.2.12) - 6th December 2022
+
+- Improved resolution subclass check
+
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.2.11...v0.2.12)
+
+---
+
+### [v0.2.11](https://github.com/decodelabs/archetype/commits/v0.2.11) - 28th November 2022
+
+- Added default fallback to resolve handler
+
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.2.10...v0.2.11)
+
+---
+
+### [v0.2.10](https://github.com/decodelabs/archetype/commits/v0.2.10) - 22nd November 2022
+
+- Added normalizer interface structure
+- Renamed Local resolver to Generic
+- Added extension namespaces to Generic resolver
+- Fixed PHP8.1 testing
+- Migrated to use effigy in CI workflow
+
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.2.9...v0.2.10)
+
+---
+
+### [v0.2.9](https://github.com/decodelabs/archetype/commits/v0.2.9) - 28th October 2022
+
+- Added interface check to class scanner
+
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.2.8...v0.2.9)
+
+---
+
+### [v0.2.8](https://github.com/decodelabs/archetype/commits/v0.2.8) - 17th October 2022
+
+- Auto register local resolver when registering extension
+
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.2.7...v0.2.8)
+
+---
+
+### [v0.2.7](https://github.com/decodelabs/archetype/commits/v0.2.7) - 17th October 2022
+
+- Added class scanner interface
+
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.2.6...v0.2.7)
+
+---
+
+### [v0.2.6](https://github.com/decodelabs/archetype/commits/v0.2.6) - 12th October 2022
+
+- Added Extension Resolver
+
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.2.5...v0.2.6)
+
+---
+
+### [v0.2.5](https://github.com/decodelabs/archetype/commits/v0.2.5) - 28th September 2022
+
+- Added check to resolve $name as subclass
+
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.2.4...v0.2.5)
+
+---
+
+### [v0.2.4](https://github.com/decodelabs/archetype/commits/v0.2.4) - 27th September 2022
+
+- Updated Veneer stub
+- Updated composer check script
+
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.2.3...v0.2.4)
+
+---
+
+### [v0.2.3](https://github.com/decodelabs/archetype/commits/v0.2.3) - 27th September 2022
+
+- Updated Veneer dependency
+
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.2.2...v0.2.3)
+
+---
+
+### [v0.2.2](https://github.com/decodelabs/archetype/commits/v0.2.2) - 26th August 2022
+
+- Fixed resolve() PHPStan return hint
+- Updated CI environment
+
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.2.1...v0.2.2)
+
+---
+
+### [v0.2.1](https://github.com/decodelabs/archetype/commits/v0.2.1) - 23rd August 2022
+
+- Added concrete types to all members
+
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.2.0...v0.2.1)
+
+---
+
+### [v0.2.0](https://github.com/decodelabs/archetype/commits/v0.2.0) - 23rd August 2022
+
+- Removed PHP7 compatibility
+- Updated ECS to v11
+- Updated PHPUnit to v9
+
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.1.1...v0.2.0)
+
+---
+
+### [v0.1.1](https://github.com/decodelabs/archetype/commits/v0.1.1) - 9th March 2022
+
+- Transitioned from Travis to GHA
+- Updated PHPStan and ECS dependencies
+
+[Full list of changes](https://github.com/decodelabs/archetype/compare/v0.1.0...v0.1.1)
+
+---
+
+### [v0.1.0](https://github.com/decodelabs/archetype/commits/v0.1.0) - 18th November 2021
+
+- Added initial boilerplate
+- Built Resolver Handler and structure
+- Added simple Finder interface
+- Built Archetype and Local Resolver implementations
