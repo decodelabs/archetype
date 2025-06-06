@@ -10,7 +10,8 @@ declare(strict_types=1);
 namespace DecodeLabs\Archetype;
 
 use Countable;
-use DecodeLabs\Glitch\Dumpable;
+use DecodeLabs\Nuance\Dumpable;
+use DecodeLabs\Nuance\Entity\NativeObject as NuanceEntity;
 use Generator;
 use IteratorAggregate;
 
@@ -150,11 +151,10 @@ class NamespaceList implements
         return count($this->namespaces);
     }
 
-    /**
-     * Dump for glitch
-     */
-    public function glitchDump(): iterable
+    public function toNuanceEntity(): NuanceEntity
     {
-        yield 'values' => $this->namespaces;
+        $entity = new NuanceEntity($this);
+        $entity->values = $this->namespaces;
+        return $entity;
     }
 }
