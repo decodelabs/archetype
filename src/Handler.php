@@ -92,7 +92,7 @@ class Handler
             $this->ensureResolver($interface);
         }
 
-        if($item instanceof Resolver) {
+        if ($item instanceof Resolver) {
             $item->setNamespaceMap($this->getNamespaceMap());
             $list = &$this->resolvers;
         } else {
@@ -122,7 +122,7 @@ class Handler
     ): void {
         $interface = $item->getInterface();
 
-        if($item instanceof Resolver) {
+        if ($item instanceof Resolver) {
             $list = &$this->resolvers;
         } else {
             $list = &$this->normalizers;

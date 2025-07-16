@@ -69,12 +69,12 @@ class NamespaceList implements
     public function contains(
         string $namespace,
     ): bool {
-        if(isset($this->namespaces[$namespace])) {
+        if (isset($this->namespaces[$namespace])) {
             return true;
         }
 
         foreach ($this->namespaces as $ns => $priority) {
-            if (str_starts_with($namespace, $ns.'\\')) {
+            if (str_starts_with($namespace, $ns . '\\')) {
                 return true;
             }
         }
@@ -89,12 +89,12 @@ class NamespaceList implements
     public function localize(
         string $namespace
     ): ?string {
-        if(isset($this->namespaces[$namespace])) {
+        if (isset($this->namespaces[$namespace])) {
             return '';
         }
 
         foreach ($this->namespaces as $ns => $priority) {
-            if (str_starts_with($namespace, $ns.'\\')) {
+            if (str_starts_with($namespace, $ns . '\\')) {
                 return substr($namespace, strlen($ns) + 1);
             }
         }
