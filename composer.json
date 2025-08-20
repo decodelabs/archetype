@@ -12,18 +12,18 @@
         "php": "^8.4",
 
         "decodelabs/exceptional": "^0.6.1",
-        "decodelabs/nuance": "^0.1.2",
-        "decodelabs/veneer": "^0.12.8"
+        "decodelabs/kingdom": "^0.1",
+        "decodelabs/nuance": "^0.1.2"
     },
     "require-dev": {
         "decodelabs/phpstan-decodelabs": "^0.7"
     },
     "autoload": {
         "psr-4": {
-            "DecodeLabs\\Archetype\\": "src/"
+            "DecodeLabs\\Archetype\\": "src/Archetype/"
         },
-        "files": [
-            "src/Handler.php"
+        "classmap": [
+            "src/Archetype.php"
         ]
     },
     "extra": {

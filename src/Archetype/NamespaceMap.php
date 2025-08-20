@@ -22,8 +22,6 @@ class NamespaceMap
     protected array $aliases = [];
 
     /**
-     * Add namespace
-     *
      * @return $this
      */
     public function add(
@@ -39,9 +37,6 @@ class NamespaceMap
         return $this;
     }
 
-    /**
-     * Has namespace?
-     */
     public function has(
         string $root,
         string $namespace
@@ -52,8 +47,6 @@ class NamespaceMap
     }
 
     /**
-     * Remove namespace
-     *
      * @return $this
      */
     public function remove(
@@ -68,8 +61,6 @@ class NamespaceMap
     }
 
     /**
-     * Add alias
-     *
      * @return $this
      */
     public function addAlias(
@@ -85,9 +76,6 @@ class NamespaceMap
         return $this;
     }
 
-    /**
-     * Has alias
-     */
     public function hasAlias(
         string $interface,
         string $alias
@@ -98,8 +86,6 @@ class NamespaceMap
     }
 
     /**
-     * Remove alias
-     *
      * @return $this
      */
     public function removeAlias(
@@ -113,9 +99,6 @@ class NamespaceMap
         return $this;
     }
 
-    /**
-     * Map namespace
-     */
     public function map(
         string $namespace,
         bool $includeRoot = true

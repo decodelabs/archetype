@@ -53,8 +53,6 @@ trait ScannerTrait
     }
 
     /**
-     * Scan classes in vendor path
-     *
      * @param class-string|null $interface
      * @return Generator<string, class-string>
      */

@@ -14,9 +14,6 @@ namespace DecodeLabs\Archetype\Resolver;
  */
 trait DefaultNameTrait
 {
-    /**
-     * Resolve default Archetype class location
-     */
     public function resolveDefault(): ?string
     {
         $parts = explode('\\', $this->getInterface());

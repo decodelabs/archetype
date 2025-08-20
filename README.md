@@ -23,9 +23,20 @@ composer require decodelabs/archetype
 
 ## Usage
 
-Use Archetype when designing plugin oriented libraries that need to load arbitrary extension classes based on a naming convention.
+Use `Archetype` when designing plugin oriented libraries that need to load arbitrary extension classes based on a naming convention.
 
-By mapping names to classes in an extensible and customisable resolver structure, Archetype allows fast and reliable means to create loosely coupled plugin ecosystems.
+By mapping names to classes in an extensible and customisable resolver structure, `Archetype` allows fast and reliable means to create loosely coupled plugin ecosystems.
+
+```php
+use DecodeLabs\Archetype;
+use MyInterface;
+
+$archetype = new Archetype();
+$class = $archetype->resolve(MyInterface::class, 'MyClass');
+```
+
+
+It is especially useful in `Factory` patterns where you need to load arbitrary classes based on a name.
 
 Example:
 
@@ -41,11 +52,17 @@ namespace My\Library
 
     class Factory {
 
-        public static function loadThing(string $name): Thing
-        {
-            // Resolve name to class for Thing interface
-            $class = Archetype::resolve(Thing::class, $name);
+        public function __construct(
+            private Archetype $archetype
+        ) {
+            $this->archetype = $archetype;
+        }
 
+        public function loadThing(
+            string $name
+        ): Thing {
+            // Resolve name to class for Thing interface
+            $class = $this->archetype->resolve(Thing::class, $name);
             return new $class();
         }
     }
@@ -71,9 +88,11 @@ namespace My\App
 
     use My\Library\Factory;
 
-    $box = Factory::loadthing('Box');
-    $potato = Factory::loadThing('Potato');
-    $dog = Factory::loadThing('Dog');
+    $factory = new Factory(new Archetype());
+
+    $box = $factory->loadThing('Box');
+    $potato = $factory->loadThing('Potato');
+    $dog = $factory->loadThing('Dog');
 }
 ```
 
@@ -123,10 +142,10 @@ Multiple `Resolver` instances can be stacked against a single interface, called 
 Alternative `Resolvers` can be loaded with:
 
 ```php
-use DecodeLabs\Archetype;
 use My\Library\Resolver\Alternative as AlternativeResolver;
 
-Archetype::register(new AlternativeResolver());
+$archetype = new Archetype();
+$archetype->register(new AlternativeResolver());
 ```
 
 ### Class scanning
@@ -134,9 +153,7 @@ Archetype::register(new AlternativeResolver());
 Some resolvers (including the default one) can scan and list all classes resolvable under a namespace.
 
 ```php
-use DecodeLabs\Archetype;
-
-foreach(Archetype::scanClasses(Thing::class) as $path => $class) {
+foreach($archetype->scanClasses(Thing::class) as $path => $class) {
     echo 'Found class: '.$class.' at '.$path.PHP_EOL;
 }
 ```
@@ -170,13 +187,15 @@ namespace My\Library {
             return 10;
         }
 
-        public function resolve(string $name): ?string
-        {
+        public function resolve(
+            string $name
+        ): ?string {
             return 'Some\\Other\\Namespace\\'.$name;
         }
 
-        public function findFile(string $name): ?string
-        {
+        public function findFile(
+            string $name
+        ): ?string {
             return './some/other/namespace/'.$name.'.jpg';
         }
     }
@@ -185,10 +204,9 @@ namespace My\Library {
 
 namespace My\App {
 
-    use DecodeLabs\Archetype;
     use My\Library\Thing;
 
-    $boxImagePath = Archetype::findFile(Thing::class, 'box');
+    $boxImagePath = $archetype->findFile(Thing::class, 'box');
 }
 ```
 

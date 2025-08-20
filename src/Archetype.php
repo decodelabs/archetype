@@ -7,68 +7,48 @@
 
 declare(strict_types=1);
 
-namespace DecodeLabs\Archetype;
+namespace DecodeLabs;
 
-use DecodeLabs\Archetype;
+use DecodeLabs\Archetype\NamespaceMap;
+use DecodeLabs\Archetype\Normalizer;
 use DecodeLabs\Archetype\Normalizer\Generic as GenericNormalizer;
+use DecodeLabs\Archetype\Resolver;
 use DecodeLabs\Archetype\Resolver\Archetype as ArchetypeResolver;
 use DecodeLabs\Archetype\Resolver\DefaultName as DefaultNameResolver;
-use DecodeLabs\Archetype\Resolver\FileFinder as FileFinder;
+use DecodeLabs\Archetype\Resolver\FileFinder;
 use DecodeLabs\Archetype\Resolver\Scanner as ScannerResolver;
-use DecodeLabs\Exceptional;
-use DecodeLabs\Veneer;
+use DecodeLabs\Kingdom\PureService;
+use DecodeLabs\Kingdom\PureServiceTrait;
 use Generator;
 use ReflectionClass;
 
-class Handler
+class Archetype implements PureService
 {
-    protected NamespaceMap $namespaces;
+    use PureServiceTrait;
+
+    public protected(set) NamespaceMap $namespaces;
 
     /**
-     * @var array<class-string, array<Resolver>>
+     * @var array<class-string,array<Resolver>>
      */
-    protected array $resolvers = [];
+    public protected(set) array $resolvers = [];
 
     /**
-     * @var array<class-string, array<Normalizer>>
+     * @var array<class-string,array<Normalizer>>
      */
-    protected array $normalizers = [];
+    public protected(set) array $normalizers = [];
 
-    /**
-     * Get namespace map
-     */
+    public function __construct()
+    {
+        $this->namespaces = new NamespaceMap();
+    }
+
     public function getNamespaceMap(): NamespaceMap
     {
-        if (!isset($this->namespaces)) {
-            $this->namespaces = new NamespaceMap();
-        }
-
         return $this->namespaces;
     }
 
-    /**
-     * Get resolvers
-     *
-     * @return array<class-string, array<Resolver>>
-     */
-    public function getResolvers(): array
-    {
-        return $this->resolvers;
-    }
 
-    /**
-     * Get normalizers
-     *
-     * @return array<class-string, array<Normalizer>>
-     */
-    public function getNormalizers(): array
-    {
-        return $this->normalizers;
-    }
-
-    /**
-     * Register resolver or pre-processor
-     */
     public function register(
         Resolver|Normalizer $item,
         bool $unique = false
@@ -80,7 +60,7 @@ class Handler
             !interface_exists($interface) &&
             !class_exists($interface)
         ) {
-            throw Exceptional::NotFound(
+            throw Exceptional::{'./Archetype/NotFound'}(
                 message: 'Interface ' . $interface . ' does not exist'
             );
         }
@@ -114,9 +94,6 @@ class Handler
         }
     }
 
-    /**
-     * Unregister resolver
-     */
     public function unregister(
         Resolver|Normalizer $item
     ): void {
@@ -138,8 +115,6 @@ class Handler
 
 
     /**
-     * Register custom normalizer
-     *
      * @template T
      * @param class-string<T> $interface
      */
@@ -160,9 +135,6 @@ class Handler
 
 
 
-    /**
-     * Add namespace to map
-     */
     public function map(
         string $root,
         string $namespace,
@@ -171,9 +143,6 @@ class Handler
         $this->getNamespaceMap()->add($root, $namespace, $priority);
     }
 
-    /**
-     * Add namespace alias
-     */
     public function alias(
         string $interface,
         string $alias,
@@ -184,8 +153,6 @@ class Handler
 
 
     /**
-     * Resolve archetype class
-     *
      * @template T of object
      * @param class-string<T> $interface
      * @param string|array<string|null>|null $names
@@ -202,7 +169,7 @@ class Handler
                 $names = implode(', ', $names);
             }
 
-            throw Exceptional::NotFound(
+            throw Exceptional::{'./Archetype/NotFound'}(
                 message: 'Could not resolve ' . ($names ? '"' . $names . '"' : 'default') . ' for interface ' . $interface
             );
         }
@@ -211,8 +178,6 @@ class Handler
     }
 
     /**
-     * Resolve archetype class
-     *
      * @template T of object
      * @param class-string<T> $interface
      * @param string|array<string|null>|null $names
@@ -344,9 +309,8 @@ class Handler
         throw Exceptional::UnexpectedValue($message);
     }
 
+
     /**
-     * Normalize input name
-     *
      * @template T of object
      * @param class-string<T> $interface
      */
@@ -365,8 +329,6 @@ class Handler
 
 
     /**
-     * Find file in space
-     *
      * @param class-string $interface
      */
     public function findFile(
@@ -389,15 +351,13 @@ class Handler
             }
         }
 
-        throw Exceptional::NotFound(
+        throw Exceptional::{'./Archetype/NotFound'}(
             message: 'Could not find file "' . $name . '" in namespace ' . $interface
         );
     }
 
 
     /**
-     * Scan Resolvers for available classes
-     *
      * @template T of object
      * @param class-string<T> $interface
      * @return Generator<string, class-string<T>>
@@ -426,8 +386,6 @@ class Handler
 
 
     /**
-     * Ensure resolver is available
-     *
      * @param class-string $interface
      */
     protected function ensureResolver(
@@ -437,7 +395,7 @@ class Handler
             if ($interface === Resolver::class) {
                 $class = ArchetypeResolver::class;
             } elseif (!$class = $this->resolve(Resolver::class, $interface)) {
-                throw Exceptional::NotFound(
+                throw Exceptional::{'./Archetype/NotFound'}(
                     message: 'Interface ' . $interface . ' has no Archetype resolver'
                 );
             }
@@ -448,10 +406,3 @@ class Handler
         }
     }
 }
-
-
-// Register the Veneer facade
-Veneer\Manager::getGlobalManager()->register(
-    Handler::class,
-    Archetype::class
-);

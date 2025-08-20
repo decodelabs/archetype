@@ -25,8 +25,6 @@ class Generic implements Scanner, DefaultName
 
 
     /**
-     * Init with interface
-     *
      * @param class-string $interface
      */
     public function __construct(
@@ -35,25 +33,16 @@ class Generic implements Scanner, DefaultName
         $this->interface = $interface;
     }
 
-    /**
-     * Get mapped interface
-     */
     public function getInterface(): string
     {
         return $this->interface;
     }
 
-    /**
-     * Get resolver priority
-     */
     public function getPriority(): int
     {
         return 20;
     }
 
-    /**
-     * Resolve Archetype class location
-     */
     public function resolve(
         string $name
     ): ?string {
@@ -72,9 +61,6 @@ class Generic implements Scanner, DefaultName
     }
 
 
-    /**
-     * Scan for available for classes
-     */
     public function scanClasses(): Generator
     {
         foreach ($this->namespaces->map($this->interface) as $namespace) {

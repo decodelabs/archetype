@@ -27,8 +27,6 @@ class Generic implements Normalizer
     protected Closure $normalizer;
 
     /**
-     * Init with callable
-     *
      * @param class-string $interface
      * @param callable(string,class-string): ?string $normalizer
      */
@@ -42,25 +40,16 @@ class Generic implements Normalizer
         $this->priority = $priority;
     }
 
-    /**
-     * Get mapped interface
-     */
     public function getInterface(): string
     {
         return $this->interface;
     }
 
-    /**
-     * Get normalizer priority
-     */
     public function getPriority(): int
     {
         return $this->priority;
     }
 
-    /**
-     * Call closure
-     */
     public function normalize(
         string $name
     ): ?string {

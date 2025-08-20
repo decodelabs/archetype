@@ -29,8 +29,6 @@ class NamespaceList implements
     protected array $namespaces = [];
 
     /**
-     * Add namespace
-     *
      * @return $this
      */
     public function add(
@@ -41,9 +39,6 @@ class NamespaceList implements
         return $this;
     }
 
-    /**
-     * Has namespace?
-     */
     public function has(
         string $namespace
     ): bool {
@@ -51,8 +46,6 @@ class NamespaceList implements
     }
 
     /**
-     * Remove namespace
-     *
      * @return $this
      */
     public function remove(
@@ -63,9 +56,6 @@ class NamespaceList implements
     }
 
 
-    /**
-     * List contains namespace or class
-     */
     public function contains(
         string $namespace,
     ): bool {
@@ -83,9 +73,6 @@ class NamespaceList implements
     }
 
 
-    /**
-     * Remove namespace prefix from class
-     */
     public function localize(
         string $namespace
     ): ?string {
@@ -103,9 +90,6 @@ class NamespaceList implements
     }
 
 
-    /**
-     * Import another list
-     */
     public function import(
         NamespaceList $list,
         ?string $mapTo = null,
@@ -128,8 +112,6 @@ class NamespaceList implements
     }
 
     /**
-     * Get iterator
-     *
      * @return Generator<int, string>
      */
     public function getIterator(): Generator
@@ -143,9 +125,6 @@ class NamespaceList implements
         }
     }
 
-    /**
-     * Count namespaces
-     */
     public function count(): int
     {
         return count($this->namespaces);
