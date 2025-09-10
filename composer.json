@@ -12,7 +12,7 @@
         "php": "^8.4",
 
         "decodelabs/exceptional": "^0.6.3",
-        "decodelabs/kingdom": "^0.1",
+        "decodelabs/kingdom": "^0.2",
         "decodelabs/nuance": "^0.1.9"
     },
     "require-dev": {
