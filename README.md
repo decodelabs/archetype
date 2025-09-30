@@ -15,6 +15,8 @@ Archetype provides a generic frontend to resolving implementation classes for a 
 
 ## Installation
 
+This package requires PHP 8.4 or higher.
+
 Install via Composer:
 
 ```bash
