@@ -1,8 +1,8 @@
 <?php
 
 /**
- * @package Archetype
- * @license http://opensource.org/licenses/MIT
+ * Archetype
+ * @license https://opensource.org/licenses/MIT
  */
 
 declare(strict_types=1);
