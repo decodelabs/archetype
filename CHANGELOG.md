@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 - Improved doc comment headers
+- Added AGENTS.md
+- Integrated Chorus dev dependency
 
 ---
 
@@ -361,3 +363,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Built Resolver Handler and structure
 - Added simple Finder interface
 - Built Archetype and Local Resolver implementations
+

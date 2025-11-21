@@ -16,6 +16,7 @@
         "decodelabs/nuance": "^0.2"
     },
     "require-dev": {
+        "decodelabs/chorus": "^0.1",
         "decodelabs/phpstan-decodelabs": "^0.7"
     },
     "autoload": {
@@ -35,7 +36,5 @@
         "allow-plugins": {
             "phpstan/extension-installer": true
         }
-    },
-    "repositories": {
     }
 }
