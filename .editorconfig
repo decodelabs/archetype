@@ -17,5 +17,5 @@ block_comment_end = */
 indent_size = 2
 
 [*.md]
-indent_style = none
+indent_size = 0
 trim_trailing_whitespace = false
